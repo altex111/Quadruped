@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\begin{document}
+
+\section{Inverz geometria}
+$A sin(\vartheta)+B cos(\vartheta)=D$ egyenlet megoldásai:
+\begin{align} \label{eq:trigeq}
+\vartheta = arctan \left( \frac{A D\pm B\sqrt{A^2+B^2-D^2}}{B D\mp A\sqrt{A^2+B^2-D^2}} \right)
+\end{align}
+Az $arctan$ függvény helyett használható az $atan2()$ függvény, ami külön kapja meg a számlálót és nevezőt, és $2\pi$ periodicitással adja meg a szöget.
+\subsection{Első szög}
+Direkt geometriából ismertek a következő egyenletek:
+\begin{align*}
+C_1 d_{3x}+S_1 (C_{23} d_3+C_2 d_2+d_1)+d_x=p_x
+\end{align*}
+\begin{align*}
+-S_1 d_{3x}+C_1 (C_{23} d_3+C_2 d_2+d_1)+d_x=p_z
+\end{align*}
+Ezekből:
+\begin{align*}
+\frac{C_1}{S_1}d_{3x}+(C_{23} d_3+C_2 d_2+d_1)=\frac{p_x-d_x}{S_1}
+\end{align*}
+\begin{align*}
+\frac{-S_1}{C_1}d_{3x}+(C_{23} d_3+C_2 d_2+d_1)=\frac{p_z-d_z}{C_1}
+\end{align*}
+A két egyenletet kivonva egymásból és megszorozva $C_1 S_1$-gyel:
+\begin{align*}
+(S_1^2+C_1^2 ) d_3x=C_1 (p_x-d_x )-S_1 (p_z-d_z)
+\end{align*}
+Itt a \eqref{eq:trigeq} egyenletbe behelyettesítve $A=d_z-p_z$, $B=p_x-d_x$ és $D=d_3x$ értékeket kapható az első csukló állása.
+\begin{align}
+\vartheta_1 = arctan \left( \frac{(d_z-p_z) d_3\pm (p_x-d_x)\sqrt{(d_z-p_z)^2+(p_x-d_x)^2-d_3^2}}{(p_x-d_x) d_3\mp (d_z-p_z)\sqrt{(d_z-p_z)^2+(p_x-d_x)^2-d_3^2}} \right)
+\end{align}
+ Mivel $D\cong0 (4 mm)$, $\vartheta_1\cong arctan\left(\frac{\pm B}{\mp A}\right)$, így a két megoldás közel $\pi$-ben tér el egymástól. Emiatt, és mert a határok közelében a többi láb mozgásterét zavarná, és így azt nem éri, elég a $-\pi/2$, $\pi/2$ közötti eredménnyel folytatni a számolást.
+\subsection{Második szög}
+\begin{align*}
+C_{23} d_3+C_2 d_2=\frac{p_x-d_x-C_1 d_{3x}}{S_1} -d_1=l
+\end{align*}
+\begin{align*}
+S_{23} d_3+S_2 d_2=d_y-p_y
+\end{align*}
+$C_{23}$-at és $S_{23}$-at kifejezve:
+\begin{align}\label{eq:c23eq}
+C_{23}=\frac{l-C_2 d_2}{d_3}
+\end{align}
+\begin{align}\label{eq:s23eq}
+S_{23}=\frac{d_y-p_y-S_2 d_2}{d_3} 
+\end{align}
+Ezeket négyzetre emelve:
+\begin{align*}
+C_{23}^2=\frac{l^2+C_2^2 d_2^2-2lC_2 d_2}{d_3^2}
+\end{align*}
+\begin{align*}
+S_{23}^2=\frac{\left(d_y-p_y\right)^2+S_2^2d_2^2-2\left(d_y-p_y\right)S_2d_2}{d_3^2}
+\end{align*}
+Összeadva a két egyenletet
+\begin{align*}
+1=\frac{l^2+(C_2^2+S_2^2)d_2^2+\left(d_y-p_y\right)^2-2lC_2 d_2-2\left(d_y-p_y\right)S_2 d_2)}{d_3^2}
+\end{align*}
+\begin{align*}
+e=\frac{l^2+d_2^2+\left(d_y-p_y\right)^2-d_3^2}{2d_2}=lC_2+\left(d_y-p_y\right)S_2
+\end{align*}
+$A=d_y-p_y$ $B=l$ $D=e$ helyettesítésekkel a képletbe behelyettesítéssel két eredmény kapható.
+\begin{align}
+\vartheta_2 = arctan \left( \frac{(d_y-p_y) e\pm l\sqrt{(d_y-p_y)^2+l^2-e^2}}{l e\mp (d_y-p_y)\sqrt{(d_y-p_y)^2+l^2-e^2}} \right)
+\end{align}
+Ezek közül az egyiknél a robot térde felfelé hajlik, a másik megoldásban lefelé. Mindkét megoldással tovább lehet haladni.
+\subsection{Harmadik szög}
+\eqref{eq:c23eq} és \eqref{eq:s23eq} képleteket elosztva egymással, kifejezve $\vartheta_3$-ra
+\begin{align}
+\vartheta_3=arctan\left(\frac{d_y-p_y-S_2 d_2}{l-C_2 d_2}\right)
+\end{align}
+\subsection{Eredmények értékelése}
+Ezáltal kaptunk két megoldást a kívánt pozícióra. Az offseteket kivonva ellenőrizhető, hogy a motor tartományán belül van-e az eredmény. Ha nincs, érvénytelen. Ha a láb hatótávolságán kívül adtunk meg pozíciót, a másodfokú egyenlet diszkriminánsa negatív lesz, nem hozva eredményt.
+
+
+
+\end{document}

@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\begin{document}
+	
+Mozgás\\\\
+A quadruped mozgásáért két osztály (WalkScript, WalkManager) és egy struktúra (QuadAction) felelős. A WalkScript tárolja a lábak mozgatásával kapcsolatos információkat.\\
+
+WalkScript\\
+\begin{tabular}{| l | l | l |}
+\hline
+változó&típus&leírás\\
+\hline
+maxTurnAtOnce&float&legnagyobb engedett fordulás egyszerre radiánban\\
+\hline
+bellyy&float&robot aljának távolsága a talajtól\\
+\hline
+legLift&float&láb emelése lépés közben\\
+\hline
+legXPos&float&láb helyzete a robot oldalán, milyen szélesen lépjen\\
+\hline
+legZRetracted&float&lábat mennyire húzza be\\
+\hline
+legStretchHalf&float&lábat legtöbb mennyire nyújtsa ki osztva 2-vel\\
+\hline
+rightBalanced&bool&jobb oldalon vannak-e nagyobb egyensúlyban a lábak\\
+\hline
+script&fifo$<$QuadAction$>$&lépések sorozata fifoban tárolva\\
+\hline
+\end{tabular}\\
+\\
+
+WalkManager\\
+\begin{tabular}{| l | l | l |}
+	\hline
+	változó&típus&leírás\\
+	\hline
+	time&float&adott lépésben helyzet [0..1]\\
+	\hline
+	speed&float&mozgás sebessége\\
+	\hline
+	script&WalkScript&lépéssorozat\\
+	\hline
+	quad&Quadruped&a quadruped amit mozgat\\
+	\hline
+	action&QuadAction&az elérendő helyzet\\
+	\hline
+	prevAction&QuadAction&kiinduló helyzet\\
+	\hline
+	running&bool&éppen mozog-e a robot\\
+	\hline
+\end{tabular}\\
+\\
+
+QuadAction\\
+\begin{tabular}{| l | l | l |}
+	\hline
+	változó&típus&leírás\\
+	\hline
+	legID&int&lábazonosító, amelyikkel lép\\
+	\hline
+	goalPos&float2&elérendő pozíció\\
+	\hline
+	rot&float&elvégzendő forgás\\
+	\hline
+\end{tabular}\\\\
+
+Mozgás előre
+
+	
+\end{document}
