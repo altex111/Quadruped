@@ -159,7 +159,7 @@ namespace gfx
 		mth::matrix matrixBuffer[2];
 		matrixBuffer[1] = camera.getCameraMatrix();
 
-		mth::float3 campos = camera.position;
+		mth::float3 campos = camera.getPosition();
 		float lightBuffer[8] = {
 			1.0f, 1.0f, 1.0f, 1.0f,
 			campos.x, campos.y, campos.z,

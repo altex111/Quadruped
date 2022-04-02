@@ -6,6 +6,56 @@ namespace mth
 	{
 		Reset();
 	}
+
+	void Position::setPosition(float3 pos) 
+	{  
+		position = posOffset + pos; 
+	}
+	void Position::setRotation(float3 rot) 
+	{ 
+		rotation = rotOffset + rot; 
+	}
+	void Position::setScale(float3 scale) 
+	{ 
+		this->scale = scale; 
+	}
+	void Position::setPositionX(float posX)
+	{
+		position = posOffset + mth::float3(posX, 0.0f, 0.0f);
+	}
+	void Position::setPositionY(float posY)
+	{
+		position = posOffset + mth::float3(0.0f, posY, 0.0f);
+	}
+	void Position::setPositionZ(float posZ)
+	{
+		position = posOffset + mth::float3(0.0f, 0.0f, posZ);
+	}
+	void Position::setRotationX(float rotX)
+	{
+		rotation = rotOffset + mth::float3(rotX, 0.0f, 0.0f);
+	}
+	void Position::setRotationY(float rotY)
+	{
+		rotation = rotOffset + mth::float3(0.0f, rotY, 0.0f);
+	}
+	void Position::setRotationZ(float rotZ)
+	{
+		rotation = rotOffset + mth::float3(0.0f, 0.0f, rotZ);
+	}
+	float3 Position::getPosition() 
+	{ 
+		return position - posOffset; 
+	}
+	float3 Position::getRotation() 
+	{ 
+		return rotation - rotOffset; 
+	}
+	float3 Position::getscale() 
+	{ 
+		return scale; 
+	}
+
 	void Position::MoveForward(float d)
 	{
 		position.x += sinf(rotation.y)*d;

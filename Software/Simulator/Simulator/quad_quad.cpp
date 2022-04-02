@@ -6,9 +6,9 @@ namespace quad
 
 	void Leg::SetJointRotation()
 	{
-		m_shouder.rotation.y = m_a1 + m_joints[m_chosenJoint].x;
-		m_thigh.rotation.x = m_a2 + m_joints[m_chosenJoint].y;
-		m_toe.rotation.x = m_a3 + m_joints[m_chosenJoint].z;
+		m_shouder.setRotationY(m_a1 + m_joints[m_chosenJoint].x);
+		m_thigh.setRotationX(m_a2 + m_joints[m_chosenJoint].y);
+		m_toe.setRotationX(m_a3 + m_joints[m_chosenJoint].z);
 	}
 
 	void Leg::ForwardGeometry()
@@ -120,6 +120,8 @@ namespace quad
 		m_a1 = mth::pi * 0.25f;
 		m_a2 = 0.0f;
 		m_a3 = mth::pi * 0.25f;
+
+
 		
 		/*m_ox = 0.35f;
 		m_oy = 0.21f;
@@ -132,23 +134,28 @@ namespace quad
 		m_a2 = 0.0f;
 		m_a3 = mth::pi*0.25f;*/
 
-		if (!m_shouder.Init(device, L"resources/shoulderRF.mdl", mth::float4(1.0f)))
+		mth::float3 posOffset = { 200.0f, 0.0f, 300.0f };
+		posOffset *= cos(mth::pi * -0.25);
+		mth::float3 rotOffset = { mth::pi * 0.0f, mth::pi * 0.25f, mth::pi * 0.5f };
+
+		if (!m_shouder.Init(device, L"resources/Robot/LegStart.mdl", mth::float4(1.0f),rotOffset,posOffset))
 			return false;
-		m_shouder.position = { m_ox, m_oy, m_oz };
+		m_shouder.setPosition({ m_ox, m_oy, m_oz });
 		m_shouder.setColor(1.0f);
-		m_shouder.rotation.y = m_a1;
+		m_shouder.setRotationY(m_a1)/*{0, 0, mth::pi * 0.5f }*/;
 
-		if (!m_thigh.Init(device, L"resources/LegMiddle_Final_1.mdl", mth::float4(1.0f)))
+
+		if (!m_thigh.Init(device, L"resources/Robot/LegMiddle.mdl", mth::float4(1.0f)))
 			return false;
-		m_thigh.position = { 0.0f, 0.0f, m_o1 };
+		m_thigh.setPosition({ 0.0f, 0.0f, m_o1 });
 		m_thigh.setColor(1.0f);
-		m_thigh.rotation.x = m_a2;
+		m_thigh.setRotationX(m_a2);
 
-		if (!m_toe.Init(device, L"resources/toeRF.mdl", mth::float4(1.0f)))
+		if (!m_toe.Init(device, L"resources/Robot/LegEnd.mdl", mth::float4(1.0f)))
 			return false;
-		m_toe.position = { m_o3x, 0.0f, m_o2 };
+		m_toe.setPosition({ m_o3x, 0.0f, m_o2 });
 		m_toe.setColor(1.0f);
-		m_toe.rotation.x = m_a3;
+		m_toe.setRotationX(m_a3);
 
 		setJointStates(0);
 		return true;
@@ -166,23 +173,23 @@ namespace quad
 		m_a2 = 0.0f;
 		m_a3 = mth::pi*0.25f;
 
-		if (!m_shouder.Init(device, L"resources/shoulderLF.mdl", mth::float4(1.0f)))
+		if (!m_shouder.Init(device, L"resources/Old/shoulderLF.mdl", mth::float4(1.0f)))
 			return false;
-		m_shouder.position = { m_ox, m_oy, m_oz };
+		m_shouder.setPosition({ m_ox, m_oy, m_oz });
 		m_shouder.setColor(1.0f);
-		m_shouder.rotation.y = m_a1;
+		m_shouder.setRotationY(m_a1);
 
-		if (!m_thigh.Init(device, L"resources/thighLF.mdl", mth::float4(1.0f)))
+		if (!m_thigh.Init(device, L"resources/Old/thighLF.mdl", mth::float4(1.0f)))
 			return false;
-		m_thigh.position = { 0.0f, 0.0f, m_o1 };
+		m_thigh.setPosition({0.0f, 0.0f, m_o1 });
 		m_thigh.setColor(1.0f);
-		m_thigh.rotation.x = m_a2;
+		m_thigh.setRotationX(m_a2);
 
-		if (!m_toe.Init(device, L"resources/toeLF.mdl", mth::float4(1.0f)))
+		if (!m_toe.Init(device, L"resources/Old/toeLF.mdl", mth::float4(1.0f)))
 			return false;
-		m_toe.position = { m_o3x, 0.0f, m_o2 };
+		m_toe.setPosition({ m_o3x, 0.0f, m_o2 });
 		m_toe.setColor(1.0f);
-		m_toe.rotation.x = m_a3;
+		m_toe.setRotationX(m_a3);
 
 		setJointStates(0);
 		return true;
@@ -200,23 +207,23 @@ namespace quad
 		m_a2 = 0.0f;
 		m_a3 = mth::pi*0.25f;
 
-		if (!m_shouder.Init(device, L"resources/shoulderLF.mdl", mth::float4(1.0f)))
+		if (!m_shouder.Init(device, L"resources/Old/shoulderLF.mdl", mth::float4(1.0f)))
 			return false;
-		m_shouder.position = { m_ox, m_oy, m_oz };
+		m_shouder.setPosition({ m_ox, m_oy, m_oz });
 		m_shouder.setColor(1.0f);
-		m_shouder.rotation.y = m_a1;
+		m_shouder.setRotationY(m_a1);
 
-		if (!m_thigh.Init(device, L"resources/thighLF.mdl", mth::float4(1.0f)))
+		if (!m_thigh.Init(device, L"resources/Old/thighLF.mdl", mth::float4(1.0f)))
 			return false;
-		m_thigh.position = { 0.0f, 0.0f, m_o1 };
+		m_thigh.setPosition({ 0.0f, 0.0f, m_o1 });
 		m_thigh.setColor(1.0f);
-		m_thigh.rotation.x = m_a2;
+		m_thigh.setRotationX(m_a2);
 
-		if (!m_toe.Init(device, L"resources/toeLF.mdl", mth::float4(1.0f)))
+		if (!m_toe.Init(device, L"resources/Old/toeLF.mdl", mth::float4(1.0f)))
 			return false;
-		m_toe.position = { m_o3x, 0.0f, m_o2 };
+		m_toe.setPosition({ m_o3x, 0.0f, m_o2 });
 		m_toe.setColor(1.0f);
-		m_toe.rotation.x = m_a3;
+		m_toe.setRotationX(m_a3);
 
 		setJointStates(0);
 		return true;
@@ -234,23 +241,23 @@ namespace quad
 		m_a2 = 0.0f;
 		m_a3 = mth::pi*0.25f;
 
-		if (!m_shouder.Init(device, L"resources/shoulderRF.mdl", mth::float4(1.0f)))
+		if (!m_shouder.Init(device, L"resources/Old/shoulderRF.mdl", mth::float4(1.0f)))
 			return false;
-		m_shouder.position = { m_ox, m_oy, m_oz };
+		m_shouder.setPosition({ m_ox, m_oy, m_oz });
 		m_shouder.setColor(1.0f);
-		m_shouder.rotation.y = m_a1;
+		m_shouder.setRotationY(m_a1);
 
-		if (!m_thigh.Init(device, L"resources/thighRF.mdl", mth::float4(1.0f)))
+		if (!m_thigh.Init(device, L"resources/Old/thighRF.mdl", mth::float4(1.0f)))
 			return false;
-		m_thigh.position = { 0.0f, 0.0f, m_o1 };
+		m_thigh.setPosition({ 0.0f, 0.0f, m_o1 });
 		m_thigh.setColor(1.0f);
-		m_thigh.rotation.x = m_a2;
+		m_thigh.setRotationX(m_a2);
 
-		if (!m_toe.Init(device, L"resources/toeRF.mdl", mth::float4(1.0f)))
+		if (!m_toe.Init(device, L"resources/Old/toeRF.mdl", mth::float4(1.0f)))
 			return false;
-		m_toe.position = { m_o3x, 0.0f, m_o2 };
+		m_toe.setPosition({ m_o3x, 0.0f, m_o2 });
 		m_toe.setColor(1.0f);
-		m_toe.rotation.x = m_a3;
+		m_toe.setRotationX(m_a3);
 
 		setJointStates(0);
 		return true;
@@ -316,10 +323,13 @@ namespace quad
 
 	bool Quadruped::Init(ID3D11Device* device)
 	{
-		if (!m_body.Init(device, L"resources/body.mdl", mth::float4(1.0f)))
+		mth::float3 posOffset = { 0.0f, 0.0f, 0.0f };
+		mth::float3 rotOffset = { mth::pi * 0.0f, mth::pi * -0.25f, mth::pi * 0.0f };
+		if (!m_body.Init(device, L"resources/Robot/body.mdl", mth::float4(1.0f), rotOffset, posOffset))
 			return false;
 		m_body.setColor(1.0f);
-		m_body.position.y = 0.5f;
+		m_body.setScale({ 0.01f, 0.01f, 0.01f });
+
 		if (!m_legs[LID_RF].InitRF(device) ||
 			!m_legs[LID_LF].InitLF(device) ||
 			!m_legs[LID_RB].InitRB(device) ||

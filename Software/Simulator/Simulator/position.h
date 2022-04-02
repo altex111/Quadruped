@@ -6,13 +6,30 @@ namespace mth
 {
 	class Position
 	{
-	public:
+	private:
 		float3 position;
 		float3 rotation;
 		float3 scale;
 
+	protected:
+		float3 posOffset;
+		float3 rotOffset;
+
+
 	public:
 		Position();
+		void setPosition(float3 pos);
+		void setRotation(float3 rot);
+		void setScale(float3 scale);
+		void setPositionX(float posX);
+		void setPositionY(float posY);
+		void setPositionZ(float posZ);
+		void setRotationX(float rotX);
+		void setRotationY(float rotY);
+		void setRotationZ(float rotZ);
+		float3 getPosition();
+		float3 getRotation();
+		float3 getscale();
 
 		void MoveForward(float d);
 		void MoveBackward(float d);

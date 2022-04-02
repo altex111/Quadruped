@@ -50,6 +50,7 @@ namespace gfx
 		m_label[0] = CreateWindow(L"static", L"", WS_VISIBLE | WS_CHILD, width - 240, 100, 200, 24, m_appWindow, NULL, NULL, NULL);
 		m_label[1] = CreateWindow(L"static", L"", WS_VISIBLE | WS_CHILD, width - 240, 130, 200, 24, m_appWindow, NULL, NULL, NULL);
 		m_label[2] = CreateWindow(L"static", L"", WS_VISIBLE | WS_CHILD, width - 240, 160, 200, 24, m_appWindow, NULL, NULL, NULL);
+		m_label[3] = CreateWindow(L"static", L"", WS_VISIBLE | WS_CHILD, width - 240, 190, 200, 24, m_appWindow, NULL, NULL, NULL);
 	}
 	Window::Window() :
 		m_appWindow(NULL),

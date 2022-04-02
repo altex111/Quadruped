@@ -217,21 +217,21 @@ namespace quad
 	}
 	mth::float3 WalkScript::getLegRFStartPos()
 	{
-		return { m_legXPos, -m_bellyy, m_legZRetracted + m_maxLegStretchHalf };
+		return { m_legXPos, -m_bellyy, m_legZRetracted/* + m_maxLegStretchHalf*/ };
 		//return { 0.35f + 0.461f + 0.4f*sinf(mth::pi / 6.0f), -m_bellyy, 0.4f + 0.5268f + 0.4f*cosf(mth::pi / 6.0f) };
 	}
 	mth::float3 WalkScript::getLegLFStartPos()
 	{
-		return { -m_legXPos, -m_bellyy, m_legZRetracted + m_maxLegStretchHalf };
+		return { -m_legXPos, -m_bellyy, m_legZRetracted/* + m_maxLegStretchHalf*/ };
 		//return { -(0.9f + 0.3f * sinf(mth::pi / 4.0f)), -m_bellyy, 0.9f + 0.3f * cosf(mth::pi / 4.0f) };
 	}
 	mth::float3 WalkScript::getLegRBStartPos()
 	{
-		return { m_legXPos, -m_bellyy, -(m_legZRetracted + m_maxLegStretchHalf) };
+		return { m_legXPos, -m_bellyy, -(m_legZRetracted/* + m_maxLegStretchHalf*/) };
 	}
 	mth::float3 WalkScript::getLegLBStartPos()
 	{
-		return { -m_legXPos, -m_bellyy, -(m_legZRetracted + m_maxLegStretchHalf) };
+		return { -m_legXPos, -m_bellyy, -(m_legZRetracted/* + m_maxLegStretchHalf*/) };
 	}
 	float WalkScript::getBellyY()
 	{
@@ -254,8 +254,8 @@ namespace quad
 		m_time = 0.0f;
 		m_speed = 3.5f;
 		m_running = false;
-		m_quad->getEntity().position = { 0.0f, m_script.getBellyY(), 0.0f };
-		m_quad->getEntity().rotation = { 0.0f, 0.0f, 0.0f };
+		m_quad->getEntity().setPosition({ 0.0f, m_script.getBellyY(), 0.0f });
+		m_quad->getEntity().setRotation({ mth::pi * 0.0f, mth::pi * 0.0f, mth::pi * 0.0f });
 		m_quad->getLegRF().setPosition(m_script.getLegRFStartPos());
 		m_quad->getLegRB().setPosition(m_script.getLegRBStartPos());
 		m_quad->getLegLF().setPosition(m_script.getLegLFStartPos());
@@ -266,7 +266,7 @@ namespace quad
 	{
 		mth::float3 delta = { -deltaTime * m_action.goalPos.x, 0.0f, deltaTime * m_action.goalPos.y };
 		m_quad->getEntity().MoveInLookDirection(delta);
-		m_quad->getEntity().rotation.y += deltaTime * m_action.rot;
+		m_quad->getEntity().setRotationY( m_quad->getEntity().getRotation().y + deltaTime * m_action.rot);
 		delta = mth::float3x3::RotationY(m_action.rot)*delta;
 		for (Leg& l : m_quad->getLegs())
 			l.setPosition(mth::float3x3::RotationY(-deltaTime * m_action.rot)*(-delta + l.getPosition()));
@@ -319,7 +319,7 @@ namespace quad
 			//m_script.AddPathElementWalkStraight(2.1f);
 			//m_script.AddPathElementMove(2.0f, mth::pi / 6.0f, 0.0f);
 			//m_script.AddPathElementTurn(-mth::pi*0.5f);
-			m_script.AddPathElementCycloidMove(0.2f);
+			//m_script.AddPathElementCycloidMove(0.2f);
 			ReceiveNextAction();
 			m_time = 0.0f;
 		}

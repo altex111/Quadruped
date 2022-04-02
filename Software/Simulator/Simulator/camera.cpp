@@ -28,14 +28,14 @@ namespace gfx
 		mth::float3 up(0.0f, 1.0f, 0.0f), lookAt(0.0f, 0.0f, 1.0f);
 		mth::float4x4 rotationMatrix;
 
-		rotationMatrix = mth::float4x4::Rotation(rotation);
+		rotationMatrix = mth::float4x4::Rotation(getRotation());
 
 		lookAt = rotationMatrix * lookAt;
 		up = rotationMatrix * up;
 
-		lookAt += position;
+		lookAt += getPosition();
 
-		return mth::float4x4::LookAt(position, lookAt, up);
+		return mth::float4x4::LookAt(getPosition(), lookAt, up);
 	}
 	mth::matrix Camera::getCameraMatrix()
 	{

@@ -8,7 +8,7 @@ namespace gfx
 	{
 		HWND m_appWindow;
 		HWND m_gfxWindow;
-		HWND m_label[3];
+		HWND m_label[4];
 		int width;
 		int height;
 

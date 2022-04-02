@@ -100,7 +100,7 @@ namespace quad
 		m_legZRetracted = 0.4f;
 		m_legStretchHalf = 0.5f;
 		m_quad = quadruped;
-		m_quad->getEntity().position = { 0.0f, m_bellyy, 0.0f };
+		m_quad->getEntity().setPosition({ 0.0f, m_bellyy, 0.0f });
 		m_quad->getLegRF().setPosition({ m_legXPos, -m_bellyy, m_legZRetracted + m_legStretchHalf });
 		m_quad->getLegRB().setPosition({ m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) });
 		m_quad->getLegLF().setPosition({ -m_legXPos, -m_bellyy, m_legZRetracted });
@@ -155,7 +155,7 @@ namespace quad
 		m_legStretchHalf = 0.2f;
 		m_radInv = 0.01f;
 		m_quad = quadruped;
-		m_quad->getEntity().position = { 0.0f, m_bellyy, 0.0f };
+		m_quad->getEntity().setPosition({ 0.0f, m_bellyy, 0.0f });
 		m_quad->getLegRF().setPosition({ m_legXPos, -m_bellyy, m_legZRetracted + m_legStretchHalf });
 		m_quad->getLegRB().setPosition({ m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) });
 		m_quad->getLegLF().setPosition({ -m_legXPos, -m_bellyy, m_legZRetracted });

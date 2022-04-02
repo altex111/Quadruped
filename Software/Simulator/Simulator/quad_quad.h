@@ -64,6 +64,7 @@ namespace quad
 		gfx::Entity m_body;
 		std::array<Leg, 4> m_legs;
 
+
 	public:
 		Quadruped() = default;
 		bool Init(ID3D11Device* device);

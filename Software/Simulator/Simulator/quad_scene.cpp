@@ -23,8 +23,8 @@ namespace quad
 		m_renderer.AddEntity(&m_quad.getEntity());
 
 		m_walk.Init(&m_quad);
-		m_camera.position = { 2.0f, 4.0f, -4.0f };
-		m_camera.rotation = { 0.67f, -0.5f, 0.0f };
+		m_camera.setPosition({ 2.0f, 4.0f, -4.0f });
+		m_camera.setRotation({ 0.67f, -0.5f, 0.0f });
 		return true;
 	}
 	void Scene::Frame(float deltaTime)
@@ -33,10 +33,12 @@ namespace quad
 		m_walk.Update(deltaTime);
 		m_renderer.Render(m_window.getGfx(), m_camera);
 
-		mth::float3 pos = m_quad.getEntity().position;
+		mth::float3 pos = m_quad.getEntity().getPosition();
+		mth::float3 rot = m_quad.getEntity().getRotation();
 		m_window.setLabelText(std::to_wstring(pos.x).c_str(), 0);
 		m_window.setLabelText(std::to_wstring(pos.y).c_str(), 1);
 		m_window.setLabelText(std::to_wstring(pos.z).c_str(), 2);
+		m_window.setLabelText(std::to_wstring(rot.y).c_str(), 3);
 	}
 	void Scene::MessageHandler(MSG& msg)
 	{

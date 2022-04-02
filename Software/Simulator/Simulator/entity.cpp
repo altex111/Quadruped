@@ -2,9 +2,12 @@
 
 namespace gfx
 {
-	bool Entity::Init(ID3D11Device *device, LPCWSTR modelPath, mth::float4 color)
+	bool Entity::Init(ID3D11Device *device, LPCWSTR modelPath, mth::float4 color, 
+		mth::float3 rotOffset, mth::float3 posOffset)
 	{
 		m_color = color;
+		this->posOffset = posOffset;
+		this->rotOffset = rotOffset;
 		return m_model.Load(device, modelPath);
 	}
 
