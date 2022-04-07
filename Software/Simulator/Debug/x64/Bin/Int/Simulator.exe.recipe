@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\sanyi\Documents\dev\repositories\Software\Simulator\Debug\x64\Bin\Simulator.exe</FullPath>
+      <FullPath>C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator\Debug\x64\Bin\Simulator.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\sanyi\Documents\dev\repositories\Software\Simulator\Simulator\resources\pixelShader.cso</FullPath>
+      <FullPath>C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator\Simulator\resources\pixelShader.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\sanyi\Documents\dev\repositories\Software\Simulator\Simulator\resources\vertexShader.cso</FullPath>
+      <FullPath>C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator\Simulator\resources\vertexShader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
