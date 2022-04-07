@@ -1,3 +1,0 @@
-﻿  quad_quad.cpp
-C:\Users\sanyi\Documents\dev\repositories\Software\Simulator\Simulator\quad_quad.cpp(138,19): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
-  Simulator.vcxproj -> C:\Users\sanyi\Documents\dev\repositories\Software\Simulator\Debug\x64\Bin\Simulator.exe
