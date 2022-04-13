@@ -25,7 +25,8 @@ namespace quad
 		bool m_rightBalanced;
 		std::list<QuadAction> m_script;
 
-	private:
+	//private:
+	public:
 		void AddPathElementLegMovement(LegID legid, mth::float2 pos);
 		void AddPathElementBodyMovement(mth::float2 pos, float turn);
 		void AddLegTurnRightBalanced(mth::float2x2 rotmat);

@@ -114,10 +114,10 @@ namespace quad
 		m_oy = 1.285f;
 		m_oz = 7.5f;
 		m_o1 = -3.25f;
-		m_o2 = 7.4f;
-		m_o3 = 10.75f;
-		m_o3x = -0.45f;
-		m_a1 = mth::pi * 0.25f;
+		m_o2 = -7.4f;
+		m_o3 = -10.75f;
+		m_o3x = 0.45f;
+		m_a1 = mth::pi * 1.0f;
 		m_a2 = mth::pi * 0.0f;
 		m_a3 = mth::pi * 0.0f;
 
@@ -159,10 +159,10 @@ namespace quad
 		m_oy = 1.285f;
 		m_oz = 7.5f;
 		m_o1 = -3.25f;
-		m_o2 = 7.4f;
-		m_o3 = 10.75f;
+		m_o2 = -7.4f;
+		m_o3 = -10.75f;
 		m_o3x = -0.45f;
-		m_a1 = 0.0f;
+		m_a1 = mth::pi * -0.5f;
 		m_a2 = 0.0f;
 		m_a3 = 0.0f;
 
@@ -204,8 +204,8 @@ namespace quad
 		m_oy = 1.285f;
 		m_oz = -7.5f;
 		m_o1 = -3.25f;
-		m_o2 = 7.4f;
-		m_o3 = 10.75f;
+		m_o2 = -7.4f;
+		m_o3 = -10.75f;
 		m_o3x = -0.45f;
 		m_a1 = 0.0f;
 		m_a2 = 0.0f;
@@ -249,9 +249,9 @@ namespace quad
 		m_oy = 1.285f;
 		m_oz = -7.5f;
 		m_o1 = -3.25f;
-		m_o2 = 7.4f;
-		m_o3 = 10.75f;
-		m_o3x = -0.45f;
+		m_o2 = -7.4f;
+		m_o3 = -10.75f;
+		m_o3x = 0.45f;
 		m_a1 = 0.0f;
 		m_a2 = 0.0f;
 		m_a3 = 0.0f;

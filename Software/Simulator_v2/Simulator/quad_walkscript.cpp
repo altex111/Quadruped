@@ -145,19 +145,22 @@ namespace quad
 	mth::float3 WalkScript::getLegRFStartPos()
 	{
 		//return { m_legXPos, -m_bellyy, m_legZRetracted + m_legStretchHalf };
-		return { m_legXBasePos+10.0f, -m_bellyy, m_legZBasePos };
+		return { m_legXBasePos+5.0f, -m_bellyy, m_legZBasePos };
 	}
 	mth::float3 WalkScript::getLegLFStartPos()
 	{
-		return { -m_legXPos, -m_bellyy, m_legZRetracted + m_legStretchHalf };
+		//return { -m_legXPos, -m_bellyy, m_legZRetracted + m_legStretchHalf };
+		return { -(m_legXBasePos + 5.0f), -m_bellyy, m_legZBasePos };
 	}
 	mth::float3 WalkScript::getLegRBStartPos()
 	{
-		return { m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) };
+		//return { m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) };
+		return { m_legXBasePos + 5.0f, -m_bellyy, -m_legZBasePos };
 	}
 	mth::float3 WalkScript::getLegLBStartPos()
 	{
-		return mth::float3({ -m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) });
+		//return mth::float3({ -m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) });
+		return { -(m_legXBasePos + 5.0f), -m_bellyy, -m_legZBasePos };
 	}
 	float WalkScript::getBellyY()
 	{
@@ -242,8 +245,11 @@ namespace quad
 	{
 		if (!m_running)
 		{
+			//m_script.AddPathElementLegMovement(LID_LF, mth::float2(-(11.0f), 10.0f));
+			//m_script.AddPathElementLegMovement(LID_LF, mth::float2(-(11.0f), 12.0f));
 			//m_script.AddPathElementWalkStraight(2.0f);
 			//m_script.AddPathElementTurn(-mth::pi*0.5f);
+			
 
 			ReceiveNextAction();
 			m_time = 0.0f;
