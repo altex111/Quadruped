@@ -113,11 +113,11 @@ namespace quad
 		m_ox = 5.25f;
 		m_oy = 1.285f;
 		m_oz = 7.5f;
-		m_o1 = -3.25f;
-		m_o2 = -7.4f;
-		m_o3 = -10.75f;
+		m_o1 = 3.25f;
+		m_o2 = 7.4f;
+		m_o3 = 10.75f;
 		m_o3x = 0.45f;
-		m_a1 = mth::pi * 1.0f;
+		m_a1 = mth::pi * 0.0f;
 		m_a2 = mth::pi * 0.0f;
 		m_a3 = mth::pi * 0.0f;
 
@@ -158,11 +158,11 @@ namespace quad
 		m_ox = -5.25f;
 		m_oy = 1.285f;
 		m_oz = 7.5f;
-		m_o1 = -3.25f;
-		m_o2 = -7.4f;
-		m_o3 = -10.75f;
+		m_o1 = 3.25f;
+		m_o2 = 7.4f;
+		m_o3 = 10.75f;
 		m_o3x = -0.45f;
-		m_a1 = mth::pi * -0.5f;
+		m_a1 = mth::pi * 0.0f;
 		m_a2 = 0.0f;
 		m_a3 = 0.0f;
 
@@ -203,11 +203,11 @@ namespace quad
 		m_ox = 5.25f;
 		m_oy = 1.285f;
 		m_oz = -7.5f;
-		m_o1 = -3.25f;
-		m_o2 = -7.4f;
-		m_o3 = -10.75f;
+		m_o1 = 3.25f;
+		m_o2 = 7.4f;
+		m_o3 = 10.75f;
 		m_o3x = -0.45f;
-		m_a1 = 0.0f;
+		m_a1 = mth::pi * -0.5f;
 		m_a2 = 0.0f;
 		m_a3 = 0.0f;
 
@@ -248,11 +248,11 @@ namespace quad
 		m_ox = -5.25f;
 		m_oy = 1.285f;
 		m_oz = -7.5f;
-		m_o1 = -3.25f;
-		m_o2 = -7.4f;
-		m_o3 = -10.75f;
+		m_o1 = 3.25f;
+		m_o2 = 7.4f;
+		m_o3 = 10.75f;
 		m_o3x = 0.45f;
-		m_a1 = 0.0f;
+		m_a1 = mth::pi * 1.0f;
 		m_a2 = 0.0f;
 		m_a3 = 0.0f;
 
@@ -353,7 +353,7 @@ namespace quad
 			return false;
 		m_body.setColor(1.0f);
 		m_body.position.y = 0.5f;
-		m_body.scale = { 0.1f, 0.1f, 0.1f };
+		//m_body.scale = { 0.1f, 0.1f, 0.1f };
 		if (!m_legs[LID_RF].InitRF(device) ||
 			!m_legs[LID_LF].InitLF(device) ||
 			!m_legs[LID_RB].InitRB(device) ||
