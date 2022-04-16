@@ -110,16 +110,16 @@ namespace quad
 
 	bool Leg::InitRF(ID3D11Device *device)
 	{
-		m_ox = 5.25f;
-		m_oy = 1.285f;
-		m_oz = 7.5f;
-		m_o1 = 3.25f;
-		m_o2 = 7.4f;
-		m_o3 = 10.75f;
-		m_o3x = 0.45f;
-		m_a1 = mth::pi * 0.0f;
+		m_ox = 0.52462f;
+		m_oy = 0.1285f;
+		m_oz = 0.74962f;
+		m_o1 = 0.322f;
+		m_o2 = 0.75f;
+		m_o3 = 1.07593f;
+		m_o3x = -0.045f;
+		m_a1 = mth::pi * 0.25f;
 		m_a2 = mth::pi * 0.0f;
-		m_a3 = mth::pi * 0.0f;
+		m_a3 = mth::pi * 0.25f;
 
 		/*m_ox = 0.35f;
 		m_oy = 0.21f;
@@ -155,16 +155,16 @@ namespace quad
 	}
 	bool Leg::InitLF(ID3D11Device *device)
 	{
-		m_ox = -5.25f;
-		m_oy = 1.285f;
-		m_oz = 7.5f;
-		m_o1 = 3.25f;
-		m_o2 = 7.4f;
-		m_o3 = 10.75f;
-		m_o3x = -0.45f;
-		m_a1 = mth::pi * 0.0f;
-		m_a2 = 0.0f;
-		m_a3 = 0.0f;
+		m_ox = -0.52462f;
+		m_oy = 0.1285f;
+		m_oz = 0.74962f;
+		m_o1 = 0.322f;
+		m_o2 = 0.75f;
+		m_o3 = 1.07593f;
+		m_o3x = 0.045f;
+		m_a1 = mth::pi * -0.25f;
+		m_a2 = mth::pi * 0.0f;
+		m_a3 = mth::pi * 0.25f;
 
 		/*m_ox = -0.35f;
 		m_oy = 0.21f;
@@ -200,16 +200,16 @@ namespace quad
 	}
 	bool Leg::InitRB(ID3D11Device *device)
 	{
-		m_ox = 5.25f;
-		m_oy = 1.285f;
-		m_oz = -7.5f;
-		m_o1 = 3.25f;
-		m_o2 = 7.4f;
-		m_o3 = 10.75f;
-		m_o3x = -0.45f;
-		m_a1 = mth::pi * -0.5f;
-		m_a2 = 0.0f;
-		m_a3 = 0.0f;
+		m_ox = 0.52462f;
+		m_oy = 0.1285f;
+		m_oz = -0.74962f;
+		m_o1 = 0.322f;
+		m_o2 = 0.75f;
+		m_o3 = 1.07593f;
+		m_o3x = 0.045f;
+		m_a1 = mth::pi * 0.75f;
+		m_a2 = mth::pi * 0.0f;
+		m_a3 = mth::pi * 0.25f;
 
 		/*m_ox = 0.35f;
 		m_oy = 0.21f;
@@ -245,16 +245,16 @@ namespace quad
 	}
 	bool Leg::InitLB(ID3D11Device *device)
 	{
-		m_ox = -5.25f;
-		m_oy = 1.285f;
-		m_oz = -7.5f;
-		m_o1 = 3.25f;
-		m_o2 = 7.4f;
-		m_o3 = 10.75f;
-		m_o3x = 0.45f;
-		m_a1 = mth::pi * 1.0f;
-		m_a2 = 0.0f;
-		m_a3 = 0.0f;
+		m_ox = -0.52462f;
+		m_oy = 0.1285f;
+		m_oz = -0.74962f;
+		m_o1 = 0.322f;
+		m_o2 = 0.75f;
+		m_o3 = 1.07593f;
+		m_o3x = -0.045f;
+		m_a1 = mth::pi * -0.75f;
+		m_a2 = mth::pi * 0.0f;
+		m_a3 = mth::pi * 0.25f;
 
 		/*m_ox = -0.35f;
 		m_oy = 0.21f;

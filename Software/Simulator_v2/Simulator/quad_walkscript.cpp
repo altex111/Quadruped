@@ -77,8 +77,8 @@ namespace quad
 		m_legXPos(0.9f),
 		m_legZRetracted(0.4f),
 		m_legStretchHalf(0.5f),
-		m_legXBasePos(5.25f),
-		m_legZBasePos(7.5f),
+		m_legXBasePos(0.525f),
+		m_legZBasePos(0.75f),
 		m_rightBalanced(true) {}
 
 	void WalkScript::AddPathElementTurn(float angle)
@@ -145,22 +145,22 @@ namespace quad
 	mth::float3 WalkScript::getLegRFStartPos()
 	{
 		//return { m_legXPos, -m_bellyy, m_legZRetracted + m_legStretchHalf };
-		return { m_legXBasePos+5.0f, -m_bellyy, m_legZBasePos };
+		return { m_legXBasePos + cos(mth::pi * 0.25f) * 0.9f, -m_bellyy, m_legZBasePos + sin(mth::pi * 0.25f) * 0.9f };
 	}
 	mth::float3 WalkScript::getLegLFStartPos()
 	{
 		//return { -m_legXPos, -m_bellyy, m_legZRetracted + m_legStretchHalf };
-		return { -(m_legXBasePos + 5.0f), -m_bellyy, m_legZBasePos };
+		return { -(m_legXBasePos + 0.8f), -m_bellyy, m_legZBasePos + 0.8f };
 	}
 	mth::float3 WalkScript::getLegRBStartPos()
 	{
 		//return { m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) };
-		return { m_legXBasePos + 5.0f, -m_bellyy, -m_legZBasePos };
+		return { m_legXBasePos + 0.8f, -m_bellyy, -(m_legZBasePos + 0.8f) };
 	}
 	mth::float3 WalkScript::getLegLBStartPos()
 	{
 		//return mth::float3({ -m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) });
-		return { -(m_legXBasePos + 5.0f), -m_bellyy, -m_legZBasePos };
+		return { -(m_legXBasePos + 0.8f), -m_bellyy, -(m_legZBasePos + 0.8f) };
 	}
 	float WalkScript::getBellyY()
 	{
@@ -181,7 +181,7 @@ namespace quad
 		m_script.Clear();
 		m_quad = quadruped;
 		m_time = 0.0f;
-		m_speed = 3.5f;
+		m_speed = 1.0f;
 		m_running = false;
 		m_quad->getEntity().position = { 0.0f, m_script.getBellyY(), 0.0f };
 		m_quad->getEntity().rotation = { 0.0f, 0.0f, 0.0f };
@@ -245,8 +245,9 @@ namespace quad
 	{
 		if (!m_running)
 		{
-			//m_script.AddPathElementLegMovement(LID_LF, mth::float2(-(11.0f), 10.0f));
-			//m_script.AddPathElementLegMovement(LID_LF, mth::float2(-(11.0f), 12.0f));
+			//m_script.AddPathElementLegMovement(LID_LF, mth::float2(legx, 1.0f));
+			//m_script.AddPathElementLegMovement(LID_LF, mth::float2(10.0f, 1.2f));
+			//m_script.AddPathElementLegMovement(LID_LF, mth::float2(10.0f, 1.0f));
 			//m_script.AddPathElementWalkStraight(2.0f);
 			//m_script.AddPathElementTurn(-mth::pi*0.5f);
 			
