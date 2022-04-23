@@ -52,6 +52,14 @@ namespace mth
 	{
 		return *this / this->Length();
 	}
+	float2circle float2::getRA() const
+	{
+		return float2circle(this);
+	}
+	float float2::Slope() const
+	{
+		return y / x;
+	}
 	float2 float2::operator+(const float2 v) const
 	{
 		return float2(x + v.x, y + v.y);
@@ -1517,6 +1525,99 @@ namespace mth
 
 #pragma endregion
 
+#pragma region float2circle
+	float2circle::float2circle(const float r, const float a) : r(r), a(a) {}
+	float2circle::float2circle(const float2 v)
+	{
+		r = sqrt(v.x * v.x + v.y * v.y);
+		a = atanf(v.x / v.y);
+	}
+	/*float2circle::float2circle(const float x, const float y) 
+	{
+		r = sqrt(x * x + y * y);
+		a = atanf(x / y);
+	}*/
+	float float2circle::getX() const
+	{
+		return r*sinf(a);
+	}
+	float float2circle::getY() const
+	{
+		return r*cosf(a);
+	}
+	float2 float2circle::getXY() const
+	{
+		return float2(r*sinf(a),r*cosf(a));
+	}
+	float2circle float2circle::operator+(const float f) const
+	{
+		return float2circle(r + f, a);
+	}
+	float2circle float2circle::operator-(const float f) const
+	{
+		return float2circle(r - f, a);
+	}
+	float2circle float2circle::operator*(const float f) const
+	{
+		return float2circle(r * f, a);
+	}
+	float2circle float2circle::operator/(const float f) const
+	{
+		return float2circle(r / f, a);
+	}
+	float2circle& float2circle::operator=(const float2circle v)
+	{
+		memcpy(this, &v, sizeof(float2circle));
+		return *this;
+	}
+	float2circle& float2circle::operator+=(const float f)
+	{
+		r += f;
+		return *this;
+	}
+	float2circle& float2circle::operator-=(const float f)
+	{
+		r -= f;
+		return *this;
+	}
+	float2circle& float2circle::operator*=(const float f)
+	{
+		r *= f;
+		return *this;
+	}
+	float2circle& float2circle::operator/=(const float f)
+	{
+		r /= f;
+		return *this;
+	}
+	/*
+	float2circle& float2circle::operator+=(const float2circle v)
+	{
+		r += v.r;
+		a += v.a;
+		return *this;
+	}
+
+	float2circle& float2circle::operator-=(const float2circle v)
+	{
+		r -= v.r;
+		a -= v.a;
+		return *this;
+	}
+	float2circle& float2circle::operator*=(const float2circle v)
+	{
+		r *= v.r;
+		a *= v.a;
+		return *this;
+	}
+	float2circle& float2circle::operator/=(const float2circle v)
+	{
+		r /= v.r;
+		a /= v.a;
+		return *this;
+	}*/
+#pragma endregion
+
 #pragma region Functions
 
 	float2 operator+(float f, float2 v)
@@ -1595,5 +1696,8 @@ namespace mth
 	}
 
 #pragma endregion
+
+
+
 
 }
