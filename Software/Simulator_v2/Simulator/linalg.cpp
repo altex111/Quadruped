@@ -1529,13 +1529,13 @@ namespace mth
 	float2circle::float2circle(const float r, const float a) : r(r), a(a) {}
 	float2circle::float2circle(const float2 v)
 	{
-		r = sqrt(v.x * v.x + v.y * v.y);
-		a = atanf(v.x / v.y);
+		r = v.Length();
+		a = atan2f(v.y,v.x);
 	}
 	/*float2circle::float2circle(const float x, const float y) 
 	{
 		r = sqrt(x * x + y * y);
-		a = atanf(x / y);
+		a = atan2f(y,x);
 	}*/
 	float float2circle::getX() const
 	{

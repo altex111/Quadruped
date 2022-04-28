@@ -15,13 +15,18 @@ namespace quad
 	class WalkScript
 	{
 		float m_maxTurnAtOnce;
+		float m_criticalAngle;
+
 		float m_bellyy;
 		float m_legLift;
 		float m_legXPos;
 		float m_legZRetracted;
 		float m_legStretchHalf;
+
 		float m_legXBasePos;
 		float m_legZBasePos;
+		float m_legMaxStretchHalf;
+		mth::float2 m_legBasePos;
 		mth::float2circle m_legCenterPos;
 		float m_legRReachOffset;
 		float m_legRReachMax;
@@ -41,18 +46,21 @@ namespace quad
 		void AddLegWalkStraightLeftBalanced(float ratio);
 		void AddLegBodyElementsWalkStraight(float distance);
 
-		void calculateOptimalsteps(float *legStretchHalf, float *turnAtOnce, mth::float2 relativePos, float relativeHeadding);
-		float calculateMaxLegStretch(mth::float2 motionDirection);
-		float findTrajectoryIntersection(mth::float2 motionDirection, mth::float2 section);
-		mth::float2x2 circleLineIntersection(float rCircle, float mLine, mth::float2 pointLine);
-		mth::float2x2 lineXYAxisIntersection(float mLine, mth::float2 pointLine);
-		mth::float2 twoPointsDistance(mth::float2 pont1, mth::float2 point2);
+		void AddLegBodyElementsMove(float *distance,uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection);
+
+		void calculateOptimalsteps(float *legStretchHalf, float *turnAtOnce, float distance, float relativeHeadding);
+		float calculateMaxLegStretchHalf(mth::float2 motionDirection);
+		float legStretchHalf(mth::float2 motionDirection, quad::LegID legId);
+		std::list<mth::float2> findTrajectoryIntersections(mth::float2 motionDirection, mth::float2 section);
+		mth::float2x2 CircleLineIntersection(float rCircle, mth::float2 normalVector, mth::float2 pointLine, float eps);
+		mth::float2x2 LineXYAxisIntersection(float mLine, mth::float2 pointLine);
+		mth::float2 SubtractPoints(mth::float2 pont1, mth::float2 point2);
 	public:
 		WalkScript();
 		void AddPathElementTurn(float angle);
 		void AddPathElementWalkStraight(float distance);
 		void AddPathElementCircle(float circleR, float rotation);
-		void AddPathElementMove(mth::float2 relativePos, float relativeHeadding);
+		void AddPathElementMove(mth::float2 relativePos, float relativeHeadding = 0);
 
 		void Clear();
 		bool NextAction(QuadAction& action);
@@ -86,4 +94,6 @@ namespace quad
 		void Update(float deltaTime);
 		WalkScript& getWalkScript();
 	};
+
+	mth::float2 Section(quad::LegID legID);
 }

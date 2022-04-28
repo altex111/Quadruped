@@ -1,4 +1,4 @@
 ﻿  quad_walkscript.cpp
-C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator_v2\Simulator\quad_walkscript.cpp(145,51): warning C4267: 'initializing': conversion from 'size_t' to 'uint8_t', possible loss of data
-C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator_v2\Simulator\quad_walkscript.cpp(241,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator_v2\Simulator\quad_walkscript.cpp(219,51): warning C4267: 'initializing': conversion from 'size_t' to 'uint8_t', possible loss of data
+C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator_v2\Simulator\quad_walkscript.cpp(386,2): warning C4305: 'initializing': truncation from 'double' to 'float'
   Simulator.vcxproj -> C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator_v2\Debug\x64\Bin\Simulator.exe

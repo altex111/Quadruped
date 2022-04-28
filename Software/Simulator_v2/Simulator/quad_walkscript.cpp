@@ -70,22 +70,133 @@ namespace quad
 		AddPathElementBodyMovement(mth::float2(0.0f, m_legStretchHalf*ratio), 0.0f);
 	}
 
-	void WalkScript::calculateOptimalsteps(float* legStretchHalf, float* turnAtOnce, mth::float2 relativePos, float relativeHeadding)
+	void WalkScript::AddLegBodyElementsMove(float *distance, uint8_t *legCount,
+		float legStretchHalf, float turnAtOnce, mth::float2 motionDirection)
 	{
+		quad::LegID stepOrder[4] = {LID_RF,LID_LF,LID_RB,LID_LB};
+		float motionAngle = motionDirection.getRA().a;
+		motionDirection.Normalize();
+
+		if (motionDirection.x > 0 && motionDirection.y >= 0)
+		{
+			stepOrder[0] = LID_RF;
+			stepOrder[1] = LID_LB;
+			if (motionAngle < m_criticalAngle)
+			{
+				stepOrder[2] = LID_LF;
+				stepOrder[3] = LID_RB;
+			}
+			else
+			{
+				stepOrder[2] = LID_RB;
+				stepOrder[3] = LID_LF;
+			}
+		}
+		else if (motionDirection.x >= 0 && motionDirection.y < 0)
+		{
+			stepOrder[0] = LID_LF;
+			stepOrder[1] = LID_RB;
+			if (fabsf(motionAngle) < m_criticalAngle)
+			{
+				stepOrder[2] = LID_RF;
+				stepOrder[3] = LID_LB;
+			}
+			else
+			{
+				stepOrder[2] = LID_LB;
+				stepOrder[3] = LID_RF;
+			}
+		}
+		else if (motionDirection.x <= 0 && motionDirection.y > 0)
+		{
+			stepOrder[0] = LID_RB;
+			stepOrder[1] = LID_LF;
+			if (motionAngle > mth::pi-m_criticalAngle)
+			{
+				stepOrder[2] = LID_LB;
+				stepOrder[3] = LID_RF;
+			}
+			else
+			{
+				stepOrder[2] = LID_RF;
+				stepOrder[3] = LID_LB;
+			}
+		}
+		else
+		{
+			stepOrder[0] = LID_LB;
+			stepOrder[1] = LID_RF;
+			if (fabsf(motionAngle) > mth::pi-m_criticalAngle)
+			{
+				stepOrder[2] = LID_RB;
+				stepOrder[3] = LID_LF;
+			}
+			else
+			{
+				stepOrder[2] = LID_LF;
+				stepOrder[3] = LID_RB;
+			}
+		}
+
+		*distance -= legStretchHalf;
+		mth::float2 point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
+		AddPathElementLegMovement(stepOrder[*legCount], mth::float2(point.y,point.x));
+
+		(* legCount)++;
+
+		point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
+		AddPathElementLegMovement(stepOrder[*legCount], mth::float2(point.y, point.x));
+
+		(* legCount)++;
+		if (*legCount >= 4)
+			*legCount = 0;
+
+		point = motionDirection * legStretchHalf;
+		AddPathElementBodyMovement(mth::float2(point.y, point.x), /*-turnAtOnce*/0);
 
 	}
+
 	/*
-		Claculate maximum step length at the actual moveing direction
-		Input: Normalized moveing direction vector
-		Output: maximum step length based on the the leg moveing trajectory
+	* Calculates the legStretchHalf and the turnAtOnce values of the robot motion
+	* Input:	(float*) legStretchHalf:	The leg stretch half calculated based on the (distance/m_legMaxStretch) not always a whole number
+	*			(flaot*) turnAtOnce:		Turn at once angle based on the relatve headding and the steps the robot has to make
+	*			(float) distance:			The distance the robot has to travel
+	*			(float)	relativeHeadding:	The headding the robot have to be after the motion
+	* Output:	(float*) legStretchHalf:	(Pointer output)
+	*			(float*) turnAtOnce:		(Pointer output)
 	*/
-	float WalkScript::calculateMaxLegStretch(mth::float2 motionDirection)
+	void WalkScript::calculateOptimalsteps(float *legStretchHalf, float *turnAtOnce, float distance, float relativeHeadding)
 	{
-		float legMaxStepHalfs[4];
-		legMaxStepHalfs[quad::LID_RF] = findTrajectoryIntersection(motionDirection, mth::float2(1, 1));
-		legMaxStepHalfs[quad::LID_LF] = findTrajectoryIntersection(motionDirection, mth::float2(-1, 1));
-		legMaxStepHalfs[quad::LID_RB] = findTrajectoryIntersection(motionDirection, mth::float2(1, -1));
-		legMaxStepHalfs[quad::LID_LB] = findTrajectoryIntersection(motionDirection, mth::float2(-1, -1));
+		float relativeHeaddingAbs = fabsf(relativeHeadding); // The absolute value of the relativeHeadding
+
+		float preferedSteps = ceilf(distance / m_legMaxStretchHalf); // Calculate minimum steps
+		float preferedTurnAtOnce = relativeHeaddingAbs / preferedSteps; // Calculate prefered one turn angle
+
+		if (preferedTurnAtOnce > m_maxTurnAtOnce)
+		{
+			//calculate parameters when preferdTurnAtOnce biger then the robot can handle
+			float steps = ceilf(relativeHeaddingAbs / m_maxTurnAtOnce); // calculate new step number
+			*legStretchHalf = distance / steps;	// calculate new step distance
+			*turnAtOnce = relativeHeaddingAbs / steps; // calculate new turn angle per step
+		}
+		else
+		{
+			*legStretchHalf = distance / preferedSteps;
+			*turnAtOnce = preferedTurnAtOnce;
+		}
+	}
+	/*
+	* Claculate maximum step length at the actual moveing direction
+	* Input:	(mth::float2) motionDirection:	Normalized moveing direction vector
+	* Output:	(float):						Maximum step length based on the the leg moveing trajectory
+	*/
+	float WalkScript::calculateMaxLegStretchHalf(mth::float2 motionDirection)
+	{
+		float legMaxStepHalfs[4] = {0,0,0,0};
+		legMaxStepHalfs[quad::LID_RF] = legStretchHalf(motionDirection, quad::LID_RF);
+		legMaxStepHalfs[quad::LID_LF] = legStretchHalf(motionDirection, quad::LID_LF);
+		legMaxStepHalfs[quad::LID_RB] = legStretchHalf(motionDirection, quad::LID_RB);
+		legMaxStepHalfs[quad::LID_LB] = legStretchHalf(motionDirection, quad::LID_LB);
 
 		float minLegStepHalf = legMaxStepHalfs[quad::LID_RF];
 		for (uint8_t i = 1; i < 4; i++)
@@ -95,8 +206,41 @@ namespace quad
 		}
 		return minLegStepHalf;
 	}
+	/*
+	* Calculates the legStrechHalf for a specific leg
+	* Input:	(mth::float2) motionDirection:	The direction of the robots motion (Normal vector)
+	*			(quad::LegID) legId:			A specific legs ID
+	* Output:	(float): The length of a specific legs strechHalf
+	*/
+	float WalkScript::legStretchHalf(mth::float2 motionDirection, quad::LegID legId)
+	{
+		std::list<mth::float2> foundPoints = findTrajectoryIntersections(motionDirection, Section(legId));
 
-	float WalkScript::findTrajectoryIntersection(mth::float2 motionDirection, mth::float2 section)
+		uint8_t numberOfFoundPoints = foundPoints.size();
+		if (numberOfFoundPoints > 2)
+			return NULL;
+		for (uint8_t i = 0; i < numberOfFoundPoints; i++)
+		{
+			mth::float2 foundPoint = foundPoints.front();
+			mth::float2 potentialStepTrajectory = SubtractPoints(m_legCenterPos.getXY() * Section(legId), foundPoint);
+			if (motionDirection.isNear(potentialStepTrajectory.Normalized(), m_EPS))
+			{
+				return potentialStepTrajectory.Length();
+			}
+			foundPoints.pop_front();
+		}
+
+		return NULL;
+	}
+
+	/*
+	* Finds the two points where the motion trajectory cross the reachble area for one leg
+	* Input:	(mth::float2) motionDirection:	The direction of the robots motion (Normal vector)
+	*			(mth::float2) section:			A vector that points where the leg is.
+	*											The vectors prefix important only
+	* Output:	(std::list<mth::float2>):		A lost of the crossing points
+	*/
+	std::list<mth::float2> WalkScript::findTrajectoryIntersections(mth::float2 motionDirection, mth::float2 section)
 	{
 		motionDirection.Normalize();
 		mth::float2 sectionAbs = section; sectionAbs.Abs();
@@ -107,11 +251,11 @@ namespace quad
 		float rOuterCircle = (m_legRReachOffset + m_legRReachMax);
 		float rInnerCircle = m_legRReachOffset;
 
-		mth::float2x2 innerCircleIntersection = circleLineIntersection(rInnerCircle, 
-			motionDirection.Slope(), centerPosXY);
-		mth::float2x2 outerCircleIntersection = circleLineIntersection(rOuterCircle,
-			motionDirection.Slope(), centerPosXY);
-		mth::float2x2 xyAxisIntersection = lineXYAxisIntersection(motionDirection.Slope(), centerPosXY);
+		mth::float2x2 innerCircleIntersection = CircleLineIntersection(rInnerCircle, 
+			motionDirection, centerPosXY, m_EPS);
+		mth::float2x2 outerCircleIntersection = CircleLineIntersection(rOuterCircle,
+			motionDirection, centerPosXY, m_EPS);
+		mth::float2x2 xyAxisIntersection = LineXYAxisIntersection(motionDirection.Slope(), centerPosXY);
 		innerCircleIntersection *= section2x2;
 		outerCircleIntersection *= section2x2;
 		xyAxisIntersection *= section2x2;
@@ -142,42 +286,31 @@ namespace quad
 			foundPoints.push_back((xyAxisIntersection * section2x2).Transposed() * mth::float2(0, 1));
 		}
 
-		uint8_t numberOfFoundPoints = foundPoints.size();
-		for (uint8_t i = 0; i < numberOfFoundPoints; i++)
-		{
-			mth::float2 foundPoint = foundPoints.front();
-			mth::float2 potentialStepTrajectory = twoPointsDistance(centerPosXY, foundPoint);
-			if (motionDirection.isNear(potentialStepTrajectory.Normalized(), m_EPS))
-			{
-				return potentialStepTrajectory.Length();
-			}
-			foundPoints.pop_front();
-		}
-		return NULL;
+		return foundPoints;
 	}
 		
 	/*
-	Calculat the interactions of a line and a circle
-	Input:	(float) rCircle:			The circles radius
-			(float) mLine:				The lines slope
-			(mth::float2) pointLine:	The point within the line
-	Output: (mth::float2x2):			Up to two crossing points
+	* Calculat the interactions of a line and a circle
+	* Input:	(float) rCircle:			The circles radius,
+	*			(float) mLine:				The lines slope,
+	*			(mth::float2) pointLine:	The point within the line
+	* Output: (mth::float2x2):			Up to two crossing points
 	*/
-	mth::float2x2 WalkScript::circleLineIntersection(float rCircle, float mLine, mth::float2 pointLine)
+	mth::float2x2 WalkScript::CircleLineIntersection(float rCircle, mth::float2 normalVector, mth::float2 pointLine, float eps)
 	{
 		float r = rCircle;
-		float A = -mLine;
-		float B = 1;
-		float C = mLine * pointLine.x - pointLine.y;
+		float A = -normalVector.y;
+		float B = normalVector.x;
+		float C = normalVector.y * pointLine.x - normalVector.x * pointLine.y;
 		float x0 = -A * C / (A * A + B * B);
 		float y0 = -B * C / (A * A + B * B);
 		mth::float2x2 foundPoinst;
-		if (C * C > r * r * (A * A + B * B) + m_EPS)
+		if (C * C > r * r * (A * A + B * B) + eps)
 		{
 			//No points
 			foundPoinst = NULL;
 		}
-		else if (abs(C * C - r * r * (A * A + B * B)) < m_EPS)
+		else if (abs(C * C - r * r * (A * A + B * B)) < eps)
 		{
 			//One point found
 			foundPoinst(0, 0) = x0;
@@ -197,12 +330,12 @@ namespace quad
 	}
 	/*
 		Calculat a lines points thats on the x and y axis
-		Input:	(float) mLine:				The lines slope
+		Input:	(float) mLine:				The lines slope,
 				(mth::float2) pointLine:	The point within the line
 		Output: (mth::float2x2)	| x1 y1 | (x,y) coordinats of the line at y = 0
 								| x2 y2 | (x,y) coordinats of the line at x = 0
 	*/					
-	mth::float2x2 WalkScript::lineXYAxisIntersection(float mLine, mth::float2 pointLine)
+	mth::float2x2 WalkScript::LineXYAxisIntersection(float mLine, mth::float2 pointLine)
 	{
 		float m = mLine;
 		float x0 = pointLine.x;
@@ -220,25 +353,40 @@ namespace quad
 		return foundPoint;
 	}
 
-	mth::float2 WalkScript::twoPointsDistance(mth::float2 point1, mth::float2 point2)
+	/*
+		Calculates the subtraction of two points
+		Input:	(mth::float2) point1:	The subtracted vector starting point,
+				(mth::float2) point2:	The subtracted vector ending point
+		Output	(mth::float2):			The subtracted vector
+	*/
+	mth::float2 WalkScript::SubtractPoints(mth::float2 point1, mth::float2 point2)
 	{
 		return mth::float2(point2.x-point1.x,point2.y-point1.y);
 	}
 
 	WalkScript::WalkScript() :
 		m_maxTurnAtOnce(mth::pi * 0.25f),
+
 		m_bellyy(0.3f),
 		m_legLift(0.2f),
 		m_legXPos(0.9f),
 		m_legZRetracted(0.4f),
 		m_legStretchHalf(0.5f),
+
 		m_legXBasePos(0.52462f),
 		m_legZBasePos(0.74962f),
-		m_legCenterPos(1.4f, mth::pi * 0.25f),
-		m_legRReachOffset(0.9f),
-		m_legRReachMax(1.0f),
+		m_legMaxStretchHalf(0.5),//This is going to be overwriten
+		m_legBasePos(0.74962f, 0.52462f),
+		m_legCenterPos(1.3f, mth::pi * 0.25f),
+		m_legRReachOffset(0.7f),
+		m_legRReachMax(1.2f),
 		m_EPS(0.001),
-		m_rightBalanced(true) {}
+
+		m_rightBalanced(true) 
+	{
+		m_criticalAngle = atan2f(m_legBasePos.y + m_legCenterPos.getY(),
+								 m_legBasePos.x + m_legCenterPos.getX());
+	}
 
 	void WalkScript::AddPathElementTurn(float angle)
 	{
@@ -262,13 +410,28 @@ namespace quad
 			distance -= m_legStretchHalf;
 		}
 	}
-
+	/*
+	* 
+	* Input:	(mth::float2) relativePos:		The new point based on robot's coordinat, it is going to move
+	*			(float)	relativeHeadding = 0:	The new headding based on robot's coordinat, it is going to have
+	* Output:	None
+	*/
 	void WalkScript::AddPathElementMove(mth::float2 relativePos, float relativeHeadding)
 	{
+		uint8_t legCount = 0;
 		float legStretchHalf = 0;
 		float turnAtOnce = 0;
-		calculateMaxLegStretch(relativePos.Normalized());
-		//calculateOptimalsteps(&legStretchHalf, &turnAtOnce, relativePos, relativeHeadding);
+		float distance = relativePos.Length();
+		m_legMaxStretchHalf = calculateMaxLegStretchHalf(relativePos.Normalized());
+		calculateOptimalsteps(&legStretchHalf, &turnAtOnce, distance, relativeHeadding);
+		
+		while (distance > m_EPS)
+		{
+			AddLegBodyElementsMove(&distance,&legCount, legStretchHalf, turnAtOnce, relativePos);
+			/*mth::float2circle temp = relativePos.getRA();
+			temp.a -= turnAtOnce;
+			relativePos = mth::float2(temp.getXY());*/
+		}
 	}
 
 	void WalkScript::Clear()
@@ -348,7 +511,7 @@ namespace quad
 		m_script.Clear();
 		m_quad = quadruped;
 		m_time = 0.0f;
-		m_speed = 1.0f;
+		m_speed = 2.0f;
 		m_running = false;
 		m_quad->getEntity().position = { 0.0f, m_script.getBellyY(), 0.0f };
 		m_quad->getEntity().rotation = { 0.0f, 0.0f, 0.0f };
@@ -360,7 +523,8 @@ namespace quad
 
 	void WalkManager::MoveBody(float deltaTime)
 	{
-		mth::float3 delta = { -deltaTime * m_action.goalPos.x, 0.0f, deltaTime * m_action.goalPos.y };
+		//Removed - befor deltaTime
+		mth::float3 delta = { deltaTime * m_action.goalPos.x, 0.0f, deltaTime * m_action.goalPos.y };
 		m_quad->getEntity().MoveInLookDirection(delta);
 		m_quad->getEntity().rotation.y += deltaTime * m_action.rot;
 		delta = mth::float3x3::RotationY(m_action.rot)*delta;
@@ -424,7 +588,9 @@ namespace quad
 			
 			//m_script.AddPathElementWalkStraight(2.0f);
 			//m_script.AddPathElementTurn(-mth::pi*0.5f);
-			m_script.AddPathElementMove(mth::float2(10.0f, 4.0f), mth::pi * 0.25);
+			m_script.AddPathElementMove(mth::float2(2.0f, 1.0f), mth::pi * 0.25f);
+			m_script.AddPathElementMove(mth::float2(0.0f, -2.0f), mth::pi * 0.25f);
+			m_script.AddPathElementMove(mth::float2(-2.0f, 1.0f), mth::pi * -0.5f);
 			
 
 			ReceiveNextAction();
@@ -439,5 +605,16 @@ namespace quad
 	}
 
 #pragma endregion
+	mth::float2 Section(quad::LegID legID)
+	{
+		if (legID == quad::LID_RF)
+			return mth::float2(1, 1);
+		else if (legID == quad::LID_LF)
+			return mth::float2(1, -1);
+		else if (legID == quad::LID_RB)
+			return mth::float2(-1, 1);
+		else //(legID == quad::LID_LB)
+			return mth::float2(-1, -1);
+	}
 }
 

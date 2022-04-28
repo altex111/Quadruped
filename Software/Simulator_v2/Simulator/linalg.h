@@ -27,7 +27,7 @@ namespace mth
 	public:
 		float2();
 		float2(const float f);
-		float2(const float * const v);
+		float2(const float* const v);
 		float2(const float x, const float y);
 		float2(const float2& v);
 		float2(const float2* v);
@@ -68,7 +68,7 @@ namespace mth
 		float& operator()(const int i);
 		operator float3() const;
 		operator float4() const;
-		operator float*() const;
+		operator float* () const;
 	};
 
 	class float3

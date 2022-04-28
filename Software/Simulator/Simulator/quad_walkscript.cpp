@@ -82,7 +82,7 @@ namespace quad
 		AddPathElementBodyMovement(mth::float2(0.0f, m_maxLegStretchHalf*ratio), 0.0f);
 	}
 
-	/*void WalkScript::AddLegBodyElementsMove(float distance, float walkAngle, float turnAngle)
+	void WalkScript::AddLegBodyElementsMove(float distance, float walkAngle, float turnAngle)
 	{
 		float deltaDistanceX = m_legStretchHalf * sinf(walkAngle);
 		float deltaDistanceY = m_legStretchHalf * cosf(walkAngle);
@@ -93,7 +93,7 @@ namespace quad
 		else
 			AddLegWalkLeftBalanced(ratio);
 		AddPathElementBodyMovement(mth::float2(m_legStretchHalf * ratio[0], m_legStretchHalf * ratio[1]), 0.0f);
-	}*/
+	}
 
 	WalkScript::WalkScript() :
 		m_maxTurnAtOnce(mth::pi * 0.25f),

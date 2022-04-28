@@ -1,2 +1,5 @@
-﻿  quad_quad.cpp
-  Simulator.vcxproj -> C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator\Debug\x64\Bin\Simulator.exe
+﻿  quad_walkscript.cpp
+C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator\Simulator\quad_walkscript.cpp(87,26): error C2065: 'm_legStretchHalf': undeclared identifier
+C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator\Simulator\quad_walkscript.cpp(88,26): error C2065: 'm_legStretchHalf': undeclared identifier
+C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator\Simulator\quad_walkscript.cpp(95,42): error C2065: 'm_legStretchHalf': undeclared identifier
+C:\Users\sanyi\Documents\dev\Repositories\Quadruped\Software\Simulator\Simulator\quad_walkscript.cpp(95,71): error C2065: 'm_legStretchHalf': undeclared identifier
