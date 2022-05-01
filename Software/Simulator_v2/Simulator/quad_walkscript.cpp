@@ -185,7 +185,10 @@ namespace quad
 		else
 		{
 			*legStretchHalf = distance / preferedSteps;
-			*turnAtOnce = (relativeHeadding / relativeHeaddingAbs) * preferedTurnAtOnce;
+			if (relativeHeaddingAbs > 0)
+				*turnAtOnce = (relativeHeadding / relativeHeaddingAbs) * preferedTurnAtOnce;
+			else
+				*turnAtOnce = 0;
 		}
 	}
 	/*
@@ -433,16 +436,39 @@ namespace quad
 		float legStretchHalf = 0;
 		float turnAtOnce = 0;
 		float distance = relativePos.Length();
+		float relativeHeaddingAbs = fabsf(relativeHeadding);
 		m_legMaxStretchHalf = calculateMaxLegStretchHalf(relativePos.Normalized());
-		calculateOptimalsteps(&legStretchHalf, &turnAtOnce, distance, relativeHeadding);
+		//TODO: Uncomment relativeHeadding if turn and move together
+		calculateOptimalsteps(&legStretchHalf, &turnAtOnce, distance, /*relativeHeadding*/0);
 		
-		//TODO: If distance 0 but has relative headding the robot dosent do anything.
+
+		//Works on that the robot can move and turn together
+		//	O-TODO: Redo all turning commands in move section
+		//	O-TODO: If distance 0 but has relative headding the robot dosent do anything.
+		//	O-TODO: Better leg order for turning as well
+		//	O-TODO: Comment and uncomment all things for the other movement method
+
+		//Works on that the robot can turn after its move
+		//	x-TODO: Comment all turning command in move section
+		//	O-TODO: Redesign turning command
+		//	x-TODO: Implement turning after move
+		//	x-TODO: Comment and uncomment all things for the other movement method
 		while (distance > m_EPS)
 		{
 			AddLegBodyElementsMove(&distance,&legCount, legStretchHalf, turnAtOnce, relativePos, &stepOrder[0]);
 			mth::float2circle posRA = relativePos.getRA();
 			posRA.a -= turnAtOnce;
 			relativePos = mth::float2(posRA.getY(), posRA.getX());
+		}
+		//TODO: Comment this out if tudn and move is together
+		while (relativeHeaddingAbs > 0.0f)
+		{
+			AddLegBodyElementsTurn(relativeHeadding);
+			relativeHeaddingAbs -= turnAtOnce;
+			if (relativeHeadding > 0.0f)
+				relativeHeadding -= turnAtOnce;
+			else
+				relativeHeadding += turnAtOnce;
 		}
 	}
 
@@ -536,7 +562,7 @@ namespace quad
 	void WalkManager::MoveBody(float deltaTime)
 	{
 		//Removed - befor deltaTime
-		mth::float3 delta = { deltaTime * m_action.goalPos.x, 0.0f, deltaTime * m_action.goalPos.y };
+		mth::float3 delta = { /*-*/deltaTime * m_action.goalPos.x, 0.0f, deltaTime * m_action.goalPos.y};
 		m_quad->getEntity().MoveInLookDirection(delta);
 		m_quad->getEntity().rotation.y += deltaTime * m_action.rot;
 		delta = mth::float3x3::RotationY(m_action.rot)*delta;
