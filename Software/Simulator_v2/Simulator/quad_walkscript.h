@@ -46,7 +46,7 @@ namespace quad
 		void AddLegWalkStraightLeftBalanced(float ratio);
 		void AddLegBodyElementsWalkStraight(float distance);
 
-		void AddLegBodyElementsMove(float *distance,uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection);
+		void AddLegBodyElementsMove(float *distance,uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quad::LegID* stepOrder);
 
 		void calculateOptimalsteps(float *legStretchHalf, float *turnAtOnce, float distance, float relativeHeadding);
 		float calculateMaxLegStretchHalf(mth::float2 motionDirection);
@@ -54,6 +54,7 @@ namespace quad
 		std::list<mth::float2> findTrajectoryIntersections(mth::float2 motionDirection, mth::float2 section);
 		mth::float2x2 CircleLineIntersection(float rCircle, mth::float2 normalVector, mth::float2 pointLine, float eps);
 		mth::float2x2 LineXYAxisIntersection(float mLine, mth::float2 pointLine);
+		mth::float2 RelativePointOnACircle(mth::float2 pointOnCircle, float angle);
 		mth::float2 SubtractPoints(mth::float2 pont1, mth::float2 point2);
 	public:
 		WalkScript();

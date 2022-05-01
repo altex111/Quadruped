@@ -71,80 +71,83 @@ namespace quad
 	}
 
 	void WalkScript::AddLegBodyElementsMove(float *distance, uint8_t *legCount,
-		float legStretchHalf, float turnAtOnce, mth::float2 motionDirection)
+		float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quad::LegID *stepOrder)
 	{
-		quad::LegID stepOrder[4] = {LID_RF,LID_LF,LID_RB,LID_LB};
 		float motionAngle = motionDirection.getRA().a;
 		motionDirection.Normalize();
 
-		if (motionDirection.x > 0 && motionDirection.y >= 0)
+		if ((* legCount) == 0)
 		{
-			stepOrder[0] = LID_RF;
-			stepOrder[1] = LID_LB;
-			if (motionAngle < m_criticalAngle)
+			if (motionDirection.x > 0 && motionDirection.y >= 0)
 			{
-				stepOrder[2] = LID_LF;
-				stepOrder[3] = LID_RB;
+				stepOrder[0] = LID_RF;
+				stepOrder[1] = LID_LB;
+				if (motionAngle < m_criticalAngle)
+				{
+					stepOrder[2] = LID_LF;
+					stepOrder[3] = LID_RB;
+				}
+				else
+				{
+					stepOrder[2] = LID_RB;
+					stepOrder[3] = LID_LF;
+				}
+			}
+			else if (motionDirection.x >= 0 && motionDirection.y < 0)
+			{
+				stepOrder[0] = LID_LF;
+				stepOrder[1] = LID_RB;
+				if (fabsf(motionAngle) < m_criticalAngle)
+				{
+					stepOrder[2] = LID_RF;
+					stepOrder[3] = LID_LB;
+				}
+				else
+				{
+					stepOrder[2] = LID_LB;
+					stepOrder[3] = LID_RF;
+				}
+			}
+			else if (motionDirection.x <= 0 && motionDirection.y > 0)
+			{
+				stepOrder[0] = LID_RB;
+				stepOrder[1] = LID_LF;
+				if (motionAngle > mth::pi - m_criticalAngle)
+				{
+					stepOrder[2] = LID_LB;
+					stepOrder[3] = LID_RF;
+				}
+				else
+				{
+					stepOrder[2] = LID_RF;
+					stepOrder[3] = LID_LB;
+				}
 			}
 			else
 			{
-				stepOrder[2] = LID_RB;
-				stepOrder[3] = LID_LF;
+				stepOrder[0] = LID_LB;
+				stepOrder[1] = LID_RF;
+				if (fabsf(motionAngle) > mth::pi - m_criticalAngle)
+				{
+					stepOrder[2] = LID_RB;
+					stepOrder[3] = LID_LF;
+				}
+				else
+				{
+					stepOrder[2] = LID_LF;
+					stepOrder[3] = LID_RB;
+				}
 			}
 		}
-		else if (motionDirection.x >= 0 && motionDirection.y < 0)
-		{
-			stepOrder[0] = LID_LF;
-			stepOrder[1] = LID_RB;
-			if (fabsf(motionAngle) < m_criticalAngle)
-			{
-				stepOrder[2] = LID_RF;
-				stepOrder[3] = LID_LB;
-			}
-			else
-			{
-				stepOrder[2] = LID_LB;
-				stepOrder[3] = LID_RF;
-			}
-		}
-		else if (motionDirection.x <= 0 && motionDirection.y > 0)
-		{
-			stepOrder[0] = LID_RB;
-			stepOrder[1] = LID_LF;
-			if (motionAngle > mth::pi-m_criticalAngle)
-			{
-				stepOrder[2] = LID_LB;
-				stepOrder[3] = LID_RF;
-			}
-			else
-			{
-				stepOrder[2] = LID_RF;
-				stepOrder[3] = LID_LB;
-			}
-		}
-		else
-		{
-			stepOrder[0] = LID_LB;
-			stepOrder[1] = LID_RF;
-			if (fabsf(motionAngle) > mth::pi-m_criticalAngle)
-			{
-				stepOrder[2] = LID_RB;
-				stepOrder[3] = LID_LF;
-			}
-			else
-			{
-				stepOrder[2] = LID_LF;
-				stepOrder[3] = LID_RB;
-			}
-		}
-
 		*distance -= legStretchHalf;
 		mth::float2 point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
+		point = RelativePointOnACircle(point, turnAtOnce);
 		AddPathElementLegMovement(stepOrder[*legCount], mth::float2(point.y,point.x));
 
 		(* legCount)++;
 
 		point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
+		point = RelativePointOnACircle(point, turnAtOnce);
 		AddPathElementLegMovement(stepOrder[*legCount], mth::float2(point.y, point.x));
 
 		(* legCount)++;
@@ -152,7 +155,7 @@ namespace quad
 			*legCount = 0;
 
 		point = motionDirection * legStretchHalf;
-		AddPathElementBodyMovement(mth::float2(point.y, point.x), /*-turnAtOnce*/0);
+		AddPathElementBodyMovement(mth::float2(point.y, point.x), turnAtOnce);
 
 	}
 
@@ -172,17 +175,17 @@ namespace quad
 		float preferedSteps = ceilf(distance / m_legMaxStretchHalf); // Calculate minimum steps
 		float preferedTurnAtOnce = relativeHeaddingAbs / preferedSteps; // Calculate prefered one turn angle
 
-		if (preferedTurnAtOnce > m_maxTurnAtOnce)
+		if (preferedTurnAtOnce > m_maxTurnAtOnce || m_legMaxStretchHalf == 0)
 		{
 			//calculate parameters when preferdTurnAtOnce biger then the robot can handle
 			float steps = ceilf(relativeHeaddingAbs / m_maxTurnAtOnce); // calculate new step number
 			*legStretchHalf = distance / steps;	// calculate new step distance
-			*turnAtOnce = relativeHeaddingAbs / steps; // calculate new turn angle per step
+			*turnAtOnce = (relativeHeadding / relativeHeaddingAbs) * (relativeHeaddingAbs / steps);// calculate new turn angle per step
 		}
 		else
 		{
 			*legStretchHalf = distance / preferedSteps;
-			*turnAtOnce = preferedTurnAtOnce;
+			*turnAtOnce = (relativeHeadding / relativeHeaddingAbs) * preferedTurnAtOnce;
 		}
 	}
 	/*
@@ -353,6 +356,13 @@ namespace quad
 		return foundPoint;
 	}
 
+	mth::float2 WalkScript::RelativePointOnACircle(mth::float2 pointOnCircle, float angle)
+	{
+		mth::float2circle posRA = pointOnCircle.getRA();
+		posRA.a += angle;
+		return mth::float2(posRA.getY(), posRA.getX());
+	}
+
 	/*
 		Calculates the subtraction of two points
 		Input:	(mth::float2) point1:	The subtracted vector starting point,
@@ -365,7 +375,7 @@ namespace quad
 	}
 
 	WalkScript::WalkScript() :
-		m_maxTurnAtOnce(mth::pi * 0.25f),
+		m_maxTurnAtOnce(mth::pi * 0.25f*0.5f),
 
 		m_bellyy(0.3f),
 		m_legLift(0.2f),
@@ -419,18 +429,20 @@ namespace quad
 	void WalkScript::AddPathElementMove(mth::float2 relativePos, float relativeHeadding)
 	{
 		uint8_t legCount = 0;
+		quad::LegID stepOrder[4] = { LID_RF,LID_LF,LID_RB,LID_LB };
 		float legStretchHalf = 0;
 		float turnAtOnce = 0;
 		float distance = relativePos.Length();
 		m_legMaxStretchHalf = calculateMaxLegStretchHalf(relativePos.Normalized());
 		calculateOptimalsteps(&legStretchHalf, &turnAtOnce, distance, relativeHeadding);
 		
+		//TODO: If distance 0 but has relative headding the robot dosent do anything.
 		while (distance > m_EPS)
 		{
-			AddLegBodyElementsMove(&distance,&legCount, legStretchHalf, turnAtOnce, relativePos);
-			/*mth::float2circle temp = relativePos.getRA();
-			temp.a -= turnAtOnce;
-			relativePos = mth::float2(temp.getXY());*/
+			AddLegBodyElementsMove(&distance,&legCount, legStretchHalf, turnAtOnce, relativePos, &stepOrder[0]);
+			mth::float2circle posRA = relativePos.getRA();
+			posRA.a -= turnAtOnce;
+			relativePos = mth::float2(posRA.getY(), posRA.getX());
 		}
 	}
 
@@ -588,9 +600,9 @@ namespace quad
 			
 			//m_script.AddPathElementWalkStraight(2.0f);
 			//m_script.AddPathElementTurn(-mth::pi*0.5f);
-			m_script.AddPathElementMove(mth::float2(2.0f, 1.0f), mth::pi * 0.25f);
-			m_script.AddPathElementMove(mth::float2(0.0f, -2.0f), mth::pi * 0.25f);
-			m_script.AddPathElementMove(mth::float2(-2.0f, 1.0f), mth::pi * -0.5f);
+			m_script.AddPathElementMove(mth::float2(5.0f, 0.0f), mth::pi * -0.5f);
+			m_script.AddPathElementMove(mth::float2(0.0f, 0.0f), mth::pi * 2.0f);
+			//m_script.AddPathElementMove(mth::float2(-2.0f, 1.0f), mth::pi * -0.5f);
 			
 
 			ReceiveNextAction();
