@@ -88,10 +88,10 @@ WalkScript::WalkScript(Quadruped& q)
 	m_rightBalanced(true),
 	m_running(false)
 {
-//	m_quad.getLegRF().setPosition(getLegRFStartPos());
-//	m_quad.getLegLF().setPosition(getLegLFStartPos());
-//	m_quad.getLegRB().setPosition(getLegRBStartPos());
-//	m_quad.getLegLB().setPosition(getLegLBStartPos());
+	m_quad.getLegRF().setPosition(getLegRFStartPos());
+	m_quad.getLegLF().setPosition(getLegLFStartPos());
+	m_quad.getLegRB().setPosition(getLegRBStartPos());
+	m_quad.getLegLB().setPosition(getLegLBStartPos());
 }
 
 void WalkScript::AddPathElementTurn(float angle)

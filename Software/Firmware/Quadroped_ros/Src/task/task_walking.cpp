@@ -11,7 +11,7 @@ namespace task
 {
 
 TaskWalk::TaskWalk(const char* name, uint16_t stackSize, uint32_t priority, MessageBufferHandle_t& RosToWalkMessage)
-:	Task(name, stackSize, priority), RosToWalkMessage(RosToWalkMessage)
+:	Task(name, stackSize, priority), RosToWalkMessage(RosToWalkMessage), walk()
 {}
 
 void TaskWalk::Process()

@@ -2,7 +2,7 @@
  * ros_wrapper.cpp
  *
  *  Created on: 2020. okt. 09.
- *      Author: Massár Lóránt
+ *      Author: Massï¿½r Lï¿½rï¿½nt
  */
 
 #include "ros/ros_wrapper.h"

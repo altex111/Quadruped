@@ -2,7 +2,7 @@
  * ros_wrapper.h
  *
  *  Created on: 2020. okt. 09.
- *      Author: Massár Lóránt
+ *      Author: Massï¿½r Lï¿½rï¿½nt
  */
 
 #pragma once
@@ -31,8 +31,7 @@
 
 namespace ros
 {
-
-typedef NodeHandle_<quad_t::STM32Hardware> NodeHandle; // default 25, 25, 512, 512
+typedef NodeHandle_<quad::STM32Hardware> NodeHandle; // default 25, 25, 512, 512
 
 class ROSNode
 {
