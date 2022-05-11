@@ -439,7 +439,7 @@ namespace quad
 		float relativeHeaddingAbs = fabsf(relativeHeadding);
 		m_legMaxStretchHalf = calculateMaxLegStretchHalf(relativePos.Normalized());
 		//TODO: Uncomment relativeHeadding if turn and move together
-		calculateOptimalsteps(&legStretchHalf, &turnAtOnce, distance, /*relativeHeadding*/0);
+		calculateOptimalsteps(&legStretchHalf, &turnAtOnce, distance, relativeHeadding);
 		
 
 		//Works on that the robot can move and turn together
@@ -461,7 +461,7 @@ namespace quad
 			relativePos = mth::float2(posRA.getY(), posRA.getX());
 		}
 		//TODO: Comment this out if tudn and move is together
-		while (relativeHeaddingAbs > 0.0f)
+		/*while (relativeHeaddingAbs > 0.0f)
 		{
 			AddLegBodyElementsTurn(relativeHeadding);
 			relativeHeaddingAbs -= turnAtOnce;
@@ -469,7 +469,7 @@ namespace quad
 				relativeHeadding -= turnAtOnce;
 			else
 				relativeHeadding += turnAtOnce;
-		}
+		}*/
 	}
 
 	void WalkScript::Clear()
