@@ -102,16 +102,16 @@ WalkScript::WalkScript(Quadruped& q)
 //	m_quad.getLegLB().setPosition(getLegLBStartPos());
 
 	m_quad.getLegLB().getBaseServo().setState(mth::pi * 0.0f);
-	m_quad.getLegLB().getShoulderServo().setState(mth::pi * 0.25f);
+	m_quad.getLegLB().getShoulderServo().setState(mth::pi * 0.34f);
 	m_quad.getLegLB().getKneeServo().setState(mth::pi * 0.34f);
 	m_quad.getLegRB().getBaseServo().setState(mth::pi * 0.0f);
-	m_quad.getLegRB().getShoulderServo().setState(mth::pi * -0.25f);
+	m_quad.getLegRB().getShoulderServo().setState(mth::pi * -0.34f);
 	m_quad.getLegRB().getKneeServo().setState(mth::pi * -0.24f); //elszartam a szervot :(
-	m_quad.getLegLF().getBaseServo().setState(mth::pi * 0.0f);
-	m_quad.getLegLF().getShoulderServo().setState(mth::pi * -0.25f);
-	m_quad.getLegLF().getKneeServo().setState(mth::pi * -0.34f);
+//	m_quad.getLegLF().getBaseServo().setState(mth::pi * 0.0f);
+//	m_quad.getLegLF().getShoulderServo().setState(mth::pi * -0.25f);
+//	m_quad.getLegLF().getKneeServo().setState(mth::pi * -0.34f);
 	m_quad.getLegRF().getBaseServo().setState(mth::pi * 0.0f);
-	m_quad.getLegRF().getShoulderServo().setState(mth::pi * 0.25f);
+	m_quad.getLegRF().getShoulderServo().setState(mth::pi * 0.34f);
 	m_quad.getLegRF().getKneeServo().setState(mth::pi * 0.34f);
 }
 

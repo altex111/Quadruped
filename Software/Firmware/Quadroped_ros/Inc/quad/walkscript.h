@@ -28,14 +28,16 @@ class WalkScript
 	float m_legStretchHalf;
 
 	float m_legMaxStretchHalf;
-	mth::float2 m_legBasePos;
-	mth::float2circle m_legCenterPos;
 	float m_legRReachOffset;
 	float m_legRReachMax;
 	float m_EPS;
 
 	bool m_rightBalanced;
 	bool m_running;
+
+public:
+	mth::float2 m_legBasePos;
+	mth::float2circle m_legCenterPos;
 
 private:
 	void AddPathElementLegMovement(LegID legid, mth::float2 pos);

@@ -68,7 +68,6 @@ void Walk::Start()
 void Walk::Loop()
 {
 	m_time += 0.05f;
-	float a = 0.25f;
 
 	if (m_quadEnabled)
 	{
@@ -78,10 +77,12 @@ void Walk::Loop()
 		}
 		else
 		{
+			mth::float2circle m_legCenterPos(1.3, mth::pi*0.25);
 			//m_quad.getLegLB().setJointStates(mth::float3(-mth::pi*0.25f, 0.5f, 1.3f));
 			//m_quad.getLegRB().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
 			//m_quad.getLegLF().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
 			//m_quad.getLegRF().setJointStates(mth::float3(-mth::pi*0.25f, 0.5f, 1.3f));
+			m_quad.getLegLF().setPosition(mth::float3(-(m_walkScipt.m_legBasePos.y + m_legCenterPos.getY()), -0.3f, m_walkScipt.m_legBasePos.x + m_legCenterPos.getX()));
 //			m_quad.getLegRB().getShoulderServo().setState(mth::pi * a);
 //			PushUps();
 		}

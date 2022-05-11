@@ -20,6 +20,7 @@ struct LegInitStruct
 	ServoInitStruct kneeServo;
 	float dir1, dir2, dir3;
 	float a1, a2, a3;
+	float a1_off, a2_off, a3_off;
 	float ox, oy, oz;
 	float o1, o2, o3;
 	float o3x;
@@ -38,6 +39,7 @@ class Leg
 
 	float m_dir1, m_dir2, m_dir3;
 	float m_a1, m_a2, m_a3;
+	float m_a1_off, m_a2_off, m_a3_off;
 	float m_ox, m_oy, m_oz;
 	float m_o1, m_o2, m_o3;
 	float m_o3x;

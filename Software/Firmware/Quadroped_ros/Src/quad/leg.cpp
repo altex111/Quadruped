@@ -26,6 +26,9 @@ LegInitStruct GetLegRBInitStruct()
 	lis.a1 = mth::pi * 0.75f;
 	lis.a2 = mth::pi * 0.0f;
 	lis.a3 = mth::pi * 0.25f;
+	lis.a1_off = mth::pi * 0.0f;
+	lis.a2_off = mth::pi * 0.0f;
+	lis.a3_off = mth::pi * 0.0f;
 	lis.dir1 = 1.0f;
 	lis.dir2 = -1.0f;
 	lis.dir3 = 1.0f;
@@ -53,6 +56,9 @@ LegInitStruct GetLegLBInitStruct()
 	lis.a1 = mth::pi * -0.75f;
 	lis.a2 = mth::pi * 0.0f;
 	lis.a3 = mth::pi * 0.25f;
+	lis.a1_off = mth::pi * 0.0f;
+	lis.a2_off = mth::pi * 0.0f;
+	lis.a3_off = mth::pi * 0.0f;
 	lis.dir1 = 1.0f;
 	lis.dir2 = 1.0f;
 	lis.dir3 = -1.0f;
@@ -80,6 +86,9 @@ LegInitStruct GetLegRFInitStruct()
 	lis.a1 = mth::pi * 0.25f;
 	lis.a2 = mth::pi * 0.0f;
 	lis.a3 = mth::pi * 0.25f;
+	lis.a1_off = mth::pi * 0.0f;
+	lis.a2_off = mth::pi * 0.0f;
+	lis.a3_off = mth::pi * 0.0f;
 	lis.dir1 = 1.0f;
 	lis.dir2 = 1.0f;
 	lis.dir3 = -1.0f;
@@ -93,7 +102,7 @@ LegInitStruct GetLegLFInitStruct()
 	lis.baseServo.assemblyOffset = -0.12f;
 	lis.shoulderServo.timer = TIM2;
 	lis.shoulderServo.channel = TimerChannel::CHANNEL2;
-	lis.shoulderServo.assemblyOffset = 0.05f;
+	lis.shoulderServo.assemblyOffset = 0.02f;
 	lis.kneeServo.timer = TIM2;
 	lis.kneeServo.channel = TimerChannel::CHANNEL1;
 	lis.kneeServo.assemblyOffset = 0.05f;
@@ -107,6 +116,9 @@ LegInitStruct GetLegLFInitStruct()
 	lis.a1 = mth::pi * -0.25f;
 	lis.a2 = mth::pi * 0.0f;
 	lis.a3 = mth::pi * 0.25f;
+	lis.a1_off = mth::pi * 0.0f;
+	lis.a2_off = mth::pi * -0.13f;
+	lis.a3_off = mth::pi * 0.25f;
 	lis.dir1 = 1.0f;
 	lis.dir2 = 1.0f;
 	lis.dir3 = -1.0f;
@@ -128,6 +140,9 @@ Leg::Leg(LegInitStruct lis)
 	m_a1 = lis.a1;
 	m_a2 = lis.a2;
 	m_a3 = lis.a3;
+	m_a1_off = lis.a1_off;
+	m_a2_off = lis.a2_off;
+	m_a3_off = lis.a3_off;
 	m_dir1 = lis.dir1;
 	m_dir2 = lis.dir2;
 	m_dir3 = lis.dir3;
@@ -137,9 +152,9 @@ Leg::Leg(LegInitStruct lis)
 
 void Leg::SetJointRotation()
 {
-	m_base.setState(m_dir1*m_joints[m_chosenJoint].x);
-	m_shoulder.setState(m_dir2*m_joints[m_chosenJoint].y);
-	m_knee.setState(m_dir3*m_joints[m_chosenJoint].z);
+	m_base.setState(m_dir1*(m_joints[m_chosenJoint].x - m_a1_off));
+	m_shoulder.setState(m_dir2*(m_joints[m_chosenJoint].y - m_a2_off));
+	m_knee.setState(m_dir3*(m_joints[m_chosenJoint].z - m_a3_off));
 }
 
 void Leg::ForwardGeometry()
