@@ -4,6 +4,8 @@
 #include "perif/uart.h"
 #include <functional>
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "usart.h"
 #include "util/fifo.h"
 

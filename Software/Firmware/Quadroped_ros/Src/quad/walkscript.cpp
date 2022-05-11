@@ -80,13 +80,40 @@ WalkScript::WalkScript(Quadruped& q)
 	m_time(0.0f),
 	m_speed(2.0f),
 	m_maxTurnAtOnce(mth::pi*0.25f),
-	m_bellyy(0.4f),
+	m_bellyy(0.3f),
 	m_legLift(0.2f),
 	m_legXPos(0.8f),
 	m_legZRetracted(0.3f),
 	m_legStretchHalf(0.5f),
 	m_rightBalanced(true),
-	m_running(false){}
+	m_running(false),
+
+	m_legMaxStretchHalf(0.5),//This is going to be overwriten
+	m_legBasePos(0.74962f, 0.52462f),
+	m_legCenterPos(1.3f, mth::pi * 0.25f),
+	m_legRReachOffset(0.7f),
+	m_legRReachMax(1.2f),
+	m_EPS(0.001)
+{
+	m_quad.EnableLegs();
+//	m_quad.getLegRF().setPosition(getLegRFStartPos());
+//	m_quad.getLegLF().setPosition(getLegLFStartPos());
+//	m_quad.getLegRB().setPosition(getLegRBStartPos());
+//	m_quad.getLegLB().setPosition(getLegLBStartPos());
+
+	m_quad.getLegLB().getBaseServo().setState(mth::pi * 0.0f);
+	m_quad.getLegLB().getShoulderServo().setState(mth::pi * 0.25f);
+	m_quad.getLegLB().getKneeServo().setState(mth::pi * 0.34f);
+	m_quad.getLegRB().getBaseServo().setState(mth::pi * 0.0f);
+	m_quad.getLegRB().getShoulderServo().setState(mth::pi * -0.25f);
+	m_quad.getLegRB().getKneeServo().setState(mth::pi * -0.24f); //elszartam a szervot :(
+	m_quad.getLegLF().getBaseServo().setState(mth::pi * 0.0f);
+	m_quad.getLegLF().getShoulderServo().setState(mth::pi * -0.25f);
+	m_quad.getLegLF().getKneeServo().setState(mth::pi * -0.34f);
+	m_quad.getLegRF().getBaseServo().setState(mth::pi * 0.0f);
+	m_quad.getLegRF().getShoulderServo().setState(mth::pi * 0.25f);
+	m_quad.getLegRF().getKneeServo().setState(mth::pi * 0.34f);
+}
 
 void WalkScript::AddPathElementTurn(float angle)
 {
@@ -147,19 +174,19 @@ bool WalkScript::NextAction(QuadAction& action)
 }
 mth::float3 WalkScript::getLegRFStartPos()
 {
-	return { m_legXPos, -m_bellyy, m_legZRetracted + m_legStretchHalf };
+	return { m_legBasePos.y + m_legCenterPos.getY(), -m_bellyy, m_legBasePos.x + m_legCenterPos.getX() };
 }
 mth::float3 WalkScript::getLegLFStartPos()
 {
-	return { -m_legXPos, -m_bellyy, m_legZRetracted + m_legStretchHalf };
+	return { -(m_legBasePos.y + m_legCenterPos.getY()), -m_bellyy, m_legBasePos.x + m_legCenterPos.getX() };
 }
 mth::float3 WalkScript::getLegRBStartPos()
 {
-	return { m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) };
+	return { m_legBasePos.y + m_legCenterPos.getY(), -m_bellyy, -(m_legBasePos.x + m_legCenterPos.getX()) };
 }
 mth::float3 WalkScript::getLegLBStartPos()
 {
-	return mth::float3({ -m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) });
+	return mth::float3({ -(m_legBasePos.y + m_legCenterPos.getY()), -m_bellyy, -(m_legBasePos.x + m_legCenterPos.getX()) });
 }
 float WalkScript::getBellyY()
 {

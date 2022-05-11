@@ -47,10 +47,10 @@ float Servo::getAssemblyOffset()
 void Servo::setState(float r)
 {
 	m_state = r + m_assemblyOffset;
-	if (m_state < -mth::pi)
-		m_state = -mth::pi;
-	else if (m_state > mth::pi)
-		m_state = mth::pi;
+	if (m_state < -mth::pi*0.34f)
+		m_state = -mth::pi*0.34f;
+	else if (m_state > mth::pi*0.34f) // from mechanics TODO: place a define
+		m_state = mth::pi*0.34f;
 	setServoState[m_channel](m_timer, m_state);
 }
 float Servo::getState()

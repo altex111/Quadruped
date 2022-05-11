@@ -2,7 +2,7 @@
  * task_walking.cpp
  *
  *  Created on: 2020. okt. 09.
- *      Author: Massár Lóránt
+ *      Author: Massï¿½r Lï¿½rï¿½nt
  */
 
 #include "task/task_walking.h"
@@ -11,13 +11,13 @@ namespace task
 {
 
 TaskWalk::TaskWalk(const char* name, uint16_t stackSize, uint32_t priority, MessageBufferHandle_t& RosToWalkMessage)
-:	Task(name, stackSize, priority), RosToWalkMessage(RosToWalkMessage)
+:	Task(name, stackSize, priority), RosToWalkMessage(RosToWalkMessage), walk()
 {}
 
 void TaskWalk::Process()
 {
 	/* Call init function */
-	walk.Start();
+	//walk.Start();
 
 	while(true)
 	{

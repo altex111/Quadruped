@@ -1420,6 +1420,66 @@ namespace mth
 			-mat[3][0], -mat[3][1], -mat[3][2], -mat[3][3]);
 	}
 
+	float2circle::float2circle(const float r, const float a) : r(r), a(a) {}
+	float2circle::float2circle(const float2 v)
+	{
+		r = v.Length();
+		a = atan2f(v.y,v.x);
+	}
+	float float2circle::getX() const
+	{
+		return r*sinf(a);
+	}
+	float float2circle::getY() const
+	{
+		return r*cosf(a);
+	}
+	float2 float2circle::getXY() const
+	{
+		return float2(r*sinf(a),r*cosf(a));
+	}
+	float2circle float2circle::operator+(const float f) const
+	{
+		return float2circle(r + f, a);
+	}
+	float2circle float2circle::operator-(const float f) const
+	{
+		return float2circle(r - f, a);
+	}
+	float2circle float2circle::operator*(const float f) const
+	{
+		return float2circle(r * f, a);
+	}
+	float2circle float2circle::operator/(const float f) const
+	{
+		return float2circle(r / f, a);
+	}
+	float2circle& float2circle::operator=(const float2circle v)
+	{
+		memcpy(this, &v, sizeof(float2circle));
+		return *this;
+	}
+	float2circle& float2circle::operator+=(const float f)
+	{
+		r += f;
+		return *this;
+	}
+	float2circle& float2circle::operator-=(const float f)
+	{
+		r -= f;
+		return *this;
+	}
+	float2circle& float2circle::operator*=(const float f)
+	{
+		r *= f;
+		return *this;
+	}
+	float2circle& float2circle::operator/=(const float f)
+	{
+		r /= f;
+		return *this;
+	}
+
 
 	float2 operator+(float f, float2 v)
 	{
