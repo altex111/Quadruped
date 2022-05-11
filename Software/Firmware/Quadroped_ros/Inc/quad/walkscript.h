@@ -26,6 +26,14 @@ class WalkScript
 	float m_legXPos;
 	float m_legZRetracted;
 	float m_legStretchHalf;
+
+	float m_legMaxStretchHalf;
+	mth::float2 m_legBasePos;
+	mth::float2circle m_legCenterPos;
+	float m_legRReachOffset;
+	float m_legRReachMax;
+	float m_EPS;
+
 	bool m_rightBalanced;
 	bool m_running;
 

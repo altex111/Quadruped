@@ -9,13 +9,13 @@ LegInitStruct GetLegRBInitStruct()
 	LegInitStruct lis;
 	lis.baseServo.timer = TIM1;
 	lis.baseServo.channel = TimerChannel::CHANNEL1;
-	lis.baseServo.assemblyOffset = -0.15f;
+	lis.baseServo.assemblyOffset = -0.21f;
 	lis.shoulderServo.timer = TIM3;
 	lis.shoulderServo.channel = TimerChannel::CHANNEL4;
-	lis.shoulderServo.assemblyOffset = 0.0f;
+	lis.shoulderServo.assemblyOffset = 0.08f;
 	lis.kneeServo.timer = TIM3;
 	lis.kneeServo.channel = TimerChannel::CHANNEL3;
-	lis.kneeServo.assemblyOffset = -0.15f;
+	lis.kneeServo.assemblyOffset = 0.22f;
 	lis.ox = 0.52462f;
 	lis.oy = 0.1285f;
 	lis.oz = -0.74962f;
@@ -42,7 +42,7 @@ LegInitStruct GetLegLBInitStruct()
 	lis.shoulderServo.assemblyOffset = 0.0f;
 	lis.kneeServo.timer = TIM3;
 	lis.kneeServo.channel = TimerChannel::CHANNEL1;
-	lis.kneeServo.assemblyOffset = -0.2f;
+	lis.kneeServo.assemblyOffset = -0.22f;
 	lis.ox = -0.52462f;
 	lis.oy = 0.1285f;
 	lis.oz = -0.74962f;
@@ -63,13 +63,13 @@ LegInitStruct GetLegRFInitStruct()
 	LegInitStruct lis;
 	lis.baseServo.timer = TIM1;
 	lis.baseServo.channel = TimerChannel::CHANNEL4;
-	lis.baseServo.assemblyOffset = -0.1f;
+	lis.baseServo.assemblyOffset = 0.0f;
 	lis.shoulderServo.timer = TIM1;
 	lis.shoulderServo.channel = TimerChannel::CHANNEL3;
-	lis.shoulderServo.assemblyOffset = -0.2f;
+	lis.shoulderServo.assemblyOffset = -0.0f;
 	lis.kneeServo.timer = TIM1;
 	lis.kneeServo.channel = TimerChannel::CHANNEL2;
-	lis.kneeServo.assemblyOffset = 0.0f;
+	lis.kneeServo.assemblyOffset = -0.12f;
 	lis.ox = 0.52462f;
 	lis.oy = 0.1285f;
 	lis.oz = 0.74962f;
@@ -90,13 +90,13 @@ LegInitStruct GetLegLFInitStruct()
 	LegInitStruct lis;
 	lis.baseServo.timer = TIM2;
 	lis.baseServo.channel = TimerChannel::CHANNEL3;
-	lis.baseServo.assemblyOffset = 0.0f;
+	lis.baseServo.assemblyOffset = -0.12f;
 	lis.shoulderServo.timer = TIM2;
 	lis.shoulderServo.channel = TimerChannel::CHANNEL2;
-	lis.shoulderServo.assemblyOffset = -0.15f;
+	lis.shoulderServo.assemblyOffset = 0.05f;
 	lis.kneeServo.timer = TIM2;
 	lis.kneeServo.channel = TimerChannel::CHANNEL1;
-	lis.kneeServo.assemblyOffset = 0.0f;
+	lis.kneeServo.assemblyOffset = 0.05f;
 	lis.ox = -0.52462f;
 	lis.oy = 0.1285f;
 	lis.oz = 0.74962f;
@@ -108,8 +108,8 @@ LegInitStruct GetLegLFInitStruct()
 	lis.a2 = mth::pi * 0.0f;
 	lis.a3 = mth::pi * 0.25f;
 	lis.dir1 = 1.0f;
-	lis.dir2 = -1.0f;
-	lis.dir3 = 1.0f;
+	lis.dir2 = 1.0f;
+	lis.dir3 = -1.0f;
 	return lis;
 }
 

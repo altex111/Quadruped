@@ -327,6 +327,46 @@ namespace mth
 		float4x4 operator-() const;
 	};
 
+	class float2circle
+	{
+	public:
+		float r;
+		float a;
+	public:
+		float2circle(const float r, const float a);
+		float2circle(const float2 v);
+		float getX() const;
+		float getY() const;
+		float2 getXY() const;
+		//float2circle operator+(const float2circle v) const;
+		//float2circle operator-(const float2circle v) const;
+		//float2circle operator*(const float2circle v) const;
+		//float2circle operator/(const float2circle v) const;
+		//float2circle operator+(const float2 v) const;
+		//float2circle operator-(const float2 v) const;
+		//float2circle operator*(const float2 v) const;
+		//float2circle operator/(const float2 v) const;
+		float2circle operator+(const float f) const;
+		float2circle operator-(const float f) const;
+		float2circle operator*(const float f) const;
+		float2circle operator/(const float f) const;
+		//float2circle& operator+=(const float2circle v);
+		//float2circle& operator-=(const float2circle v);
+		//float2circle& operator*=(const float2circle v);
+		//float2circle& operator/=(const float2circle v);
+		float2circle& operator=(const float2circle v);
+		//float2circle& operator+=(const float2 v);
+		//float2circle& operator-=(const float2 v);
+		//float2circle& operator*=(const float2 v);
+		//float2circle& operator/=(const float2 v);
+		//float2circle& operator=(const float2 v);
+		float2circle& operator+=(const float f);
+		float2circle& operator-=(const float f);
+		float2circle& operator*=(const float f);
+		float2circle& operator/=(const float f);
+		//float2circle& operator=(const float f);
+	};
+
 
 	float2 operator+(const float f, const float2 v);
 	float3 operator+(const float f, const float3 v);

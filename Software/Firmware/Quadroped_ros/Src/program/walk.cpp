@@ -52,7 +52,7 @@ void Walk::ToggleQuadEnabled()
 Walk::Walk()
 :	m_quad(),
 	m_walkScipt(m_quad),
-	m_quadEnabled(false),
+	m_quadEnabled(true),
 	m_time(0.0f),
 	m_walking(false)
 {
@@ -68,6 +68,7 @@ void Walk::Start()
 void Walk::Loop()
 {
 	m_time += 0.05f;
+	float a = 0.25f;
 
 	if (m_quadEnabled)
 	{
@@ -77,12 +78,12 @@ void Walk::Loop()
 		}
 		else
 		{
-			m_quad.getLegLB().setJointStates(mth::float3(-mth::pi*0.25f, 0.5f, 1.3f));
-			m_quad.getLegRB().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
-			m_quad.getLegLF().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
-			m_quad.getLegRF().setJointStates(mth::float3(-mth::pi*0.25f, 0.5f, 1.3f));
-
-			//PushUps();
+			//m_quad.getLegLB().setJointStates(mth::float3(-mth::pi*0.25f, 0.5f, 1.3f));
+			//m_quad.getLegRB().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
+			//m_quad.getLegLF().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
+			//m_quad.getLegRF().setJointStates(mth::float3(-mth::pi*0.25f, 0.5f, 1.3f));
+//			m_quad.getLegRB().getShoulderServo().setState(mth::pi * a);
+//			PushUps();
 		}
 	}
 
