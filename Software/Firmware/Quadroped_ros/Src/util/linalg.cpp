@@ -52,6 +52,14 @@ namespace mth
 	{
 		return *this / this->Length();
 	}
+	float2circle float2::getRA() const
+	{
+		return float2circle(this);
+	}
+	float float2::Slope() const
+	{
+		return y / x;
+	}
 	float2 float2::operator+(const float2 v) const
 	{
 		return float2(x + v.x, y + v.y);
@@ -150,6 +158,10 @@ namespace mth
 	float2 float2::operator*(const float2x2& m) const
 	{
 		return float2(x * m(0, 0) + y * m(1, 0), x * m(0, 1) + y * m(1, 1));
+	}
+	bool float2::isNear(float2 v, float eps)
+	{
+		return fabsf(x - v.x) < eps && fabsf(y - v.y) < eps;
 	}
 	float float2::operator()(const int i) const
 	{
@@ -649,7 +661,7 @@ namespace mth
 	{
 		float tmp = mat[0][1]; mat[0][1] = mat[1][0]; mat[1][0] = tmp;
 	}
-	float2x2 float2x2::Trasposed() const
+	float2x2 float2x2::Transposed() const
 	{
 		float2x2 m(this);
 		m.Transpose();

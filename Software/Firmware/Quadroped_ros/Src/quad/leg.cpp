@@ -4,18 +4,38 @@
 namespace quad
 {
 
+mth::float2 Section(quad::LegID legID)
+{
+	if (legID == quad::LID_RF)
+		return mth::float2(1, 1);
+//		return mth::float2(-1, 1);
+	else if (legID == quad::LID_LF)
+		return mth::float2(1, -1);
+//		return mth::float2(1, 1);
+	else if (legID == quad::LID_RB)
+		return mth::float2(-1, 1);
+//		return mth::float2(-1, -1);
+	else //(legID == quad::LID_LB)
+		return mth::float2(-1, -1);
+//		return mth::float2(1, -1);
+}
+
 LegInitStruct GetLegRBInitStruct()
 {
 	LegInitStruct lis;
 	lis.baseServo.timer = TIM1;
 	lis.baseServo.channel = TimerChannel::CHANNEL1;
-	lis.baseServo.assemblyOffset = -0.21f;
+	lis.baseServo.assemblyOffset = mth::pi * 0.0f + (-0.21f);
+	lis.baseServo.positiveLimit = mth::pi * 0.25;
+	lis.baseServo.negativeLimit = mth::pi * 0.25;
 	lis.shoulderServo.timer = TIM3;
 	lis.shoulderServo.channel = TimerChannel::CHANNEL4;
-	lis.shoulderServo.assemblyOffset = 0.08f;
+	lis.shoulderServo.assemblyOffset = mth::pi * 0.13f + (0.1f);
+	lis.shoulderServo.negativeLimit = mth::pi * 0.34f - 0.1f;
 	lis.kneeServo.timer = TIM3;
 	lis.kneeServo.channel = TimerChannel::CHANNEL3;
-	lis.kneeServo.assemblyOffset = 0.22f;
+	lis.kneeServo.assemblyOffset = mth::pi * 0.25f + (0.005f);
+	lis.kneeServo.negativeLimit = mth::pi * 0.34f - 0.005;
 	lis.ox = 0.52462f;
 	lis.oy = 0.1285f;
 	lis.oz = -0.74962f;
@@ -27,11 +47,11 @@ LegInitStruct GetLegRBInitStruct()
 	lis.a2 = mth::pi * 0.0f;
 	lis.a3 = mth::pi * 0.25f;
 	lis.a1_off = mth::pi * 0.0f;
-	lis.a2_off = mth::pi * 0.0f;
-	lis.a3_off = mth::pi * 0.0f;
+	lis.a2_off = mth::pi * 0.13f;
+	lis.a3_off = mth::pi * 0.25f;
 	lis.dir1 = 1.0f;
-	lis.dir2 = -1.0f;
-	lis.dir3 = 1.0f;
+	lis.dir2 = 1.0f;
+	lis.dir3 = -1.0f;
 	return lis;
 }
 LegInitStruct GetLegLBInitStruct()
@@ -39,13 +59,17 @@ LegInitStruct GetLegLBInitStruct()
 	LegInitStruct lis;
 	lis.baseServo.timer = TIM2;
 	lis.baseServo.channel = TimerChannel::CHANNEL4;
-	lis.baseServo.assemblyOffset = 0.0f;
+	lis.baseServo.assemblyOffset = mth::pi*0.0f + (0.0f);
+	lis.baseServo.positiveLimit = mth::pi * 0.25;
+	lis.baseServo.negativeLimit = mth::pi * 0.25;
 	lis.shoulderServo.timer = TIM3;
 	lis.shoulderServo.channel = TimerChannel::CHANNEL2;
-	lis.shoulderServo.assemblyOffset = 0.0f;
+	lis.shoulderServo.assemblyOffset = mth::pi * -0.12f + (0.02f);
+	lis.shoulderServo.positiveLimit = mth::pi * 0.34f + 0.02f;
 	lis.kneeServo.timer = TIM3;
 	lis.kneeServo.channel = TimerChannel::CHANNEL1;
-	lis.kneeServo.assemblyOffset = -0.22f;
+	lis.kneeServo.assemblyOffset = mth::pi * -0.25f + (-0.2f);
+	lis.kneeServo.positiveLimit = mth::pi * 0.34f - 0.2f;
 	lis.ox = -0.52462f;
 	lis.oy = 0.1285f;
 	lis.oz = -0.74962f;
@@ -57,11 +81,11 @@ LegInitStruct GetLegLBInitStruct()
 	lis.a2 = mth::pi * 0.0f;
 	lis.a3 = mth::pi * 0.25f;
 	lis.a1_off = mth::pi * 0.0f;
-	lis.a2_off = mth::pi * 0.0f;
-	lis.a3_off = mth::pi * 0.0f;
-	lis.dir1 = 1.0f;
-	lis.dir2 = 1.0f;
-	lis.dir3 = -1.0f;
+	lis.a2_off = mth::pi * -0.12f;
+	lis.a3_off = mth::pi * -0.25f;
+	lis.dir1 = -1.0f;
+	lis.dir2 = -1.0f;
+	lis.dir3 = 1.0f;
 	return lis;
 }
 LegInitStruct GetLegRFInitStruct()
@@ -69,13 +93,17 @@ LegInitStruct GetLegRFInitStruct()
 	LegInitStruct lis;
 	lis.baseServo.timer = TIM1;
 	lis.baseServo.channel = TimerChannel::CHANNEL4;
-	lis.baseServo.assemblyOffset = 0.0f;
+	lis.baseServo.assemblyOffset = mth::pi * 0.0f + (0.0f);
+	lis.baseServo.positiveLimit = mth::pi * 0.25;
+	lis.baseServo.negativeLimit = mth::pi * 0.25;
 	lis.shoulderServo.timer = TIM1;
 	lis.shoulderServo.channel = TimerChannel::CHANNEL3;
-	lis.shoulderServo.assemblyOffset = -0.0f;
+	lis.shoulderServo.assemblyOffset = mth::pi * -0.12f + (0.02f);
+	lis.shoulderServo.positiveLimit = mth::pi * 0.34f + 0.02f;
 	lis.kneeServo.timer = TIM1;
 	lis.kneeServo.channel = TimerChannel::CHANNEL2;
-	lis.kneeServo.assemblyOffset = -0.12f;
+	lis.kneeServo.assemblyOffset = mth::pi * -0.25f + (-0.1f);
+	lis.kneeServo.positiveLimit = mth::pi * 0.34f - 0.1f;
 	lis.ox = 0.52462f;
 	lis.oy = 0.1285f;
 	lis.oz = 0.74962f;
@@ -87,11 +115,11 @@ LegInitStruct GetLegRFInitStruct()
 	lis.a2 = mth::pi * 0.0f;
 	lis.a3 = mth::pi * 0.25f;
 	lis.a1_off = mth::pi * 0.0f;
-	lis.a2_off = mth::pi * 0.0f;
-	lis.a3_off = mth::pi * 0.0f;
-	lis.dir1 = 1.0f;
-	lis.dir2 = 1.0f;
-	lis.dir3 = -1.0f;
+	lis.a2_off = mth::pi * -0.12f;
+	lis.a3_off = mth::pi * -0.25f;
+	lis.dir1 = -1.0f;
+	lis.dir2 = -1.0f;
+	lis.dir3 = 1.0f;
 	return lis;
 }
 LegInitStruct GetLegLFInitStruct()
@@ -99,13 +127,17 @@ LegInitStruct GetLegLFInitStruct()
 	LegInitStruct lis;
 	lis.baseServo.timer = TIM2;
 	lis.baseServo.channel = TimerChannel::CHANNEL3;
-	lis.baseServo.assemblyOffset = -0.12f;
+	lis.baseServo.assemblyOffset = mth::pi * 0.0f + (-0.12f);
+	lis.baseServo.positiveLimit = mth::pi * 0.25;
+	lis.baseServo.negativeLimit = mth::pi * 0.25;
 	lis.shoulderServo.timer = TIM2;
 	lis.shoulderServo.channel = TimerChannel::CHANNEL2;
-	lis.shoulderServo.assemblyOffset = 0.02f;
+	lis.shoulderServo.assemblyOffset = mth::pi * 0.13f + (0.02f);
+	lis.shoulderServo.negativeLimit = mth::pi * 0.34f - 0.02f;
 	lis.kneeServo.timer = TIM2;
 	lis.kneeServo.channel = TimerChannel::CHANNEL1;
-	lis.kneeServo.assemblyOffset = 0.05f;
+	lis.kneeServo.assemblyOffset = mth::pi * 0.25f + (0.05f);
+	lis.kneeServo.negativeLimit = mth::pi * 0.34f - 0.05f;
 	lis.ox = -0.52462f;
 	lis.oy = 0.1285f;
 	lis.oz = 0.74962f;
@@ -117,11 +149,12 @@ LegInitStruct GetLegLFInitStruct()
 	lis.a2 = mth::pi * 0.0f;
 	lis.a3 = mth::pi * 0.25f;
 	lis.a1_off = mth::pi * 0.0f;
-	lis.a2_off = mth::pi * -0.13f;
+	lis.a2_off = mth::pi * 0.13f;
 	lis.a3_off = mth::pi * 0.25f;
 	lis.dir1 = 1.0f;
 	lis.dir2 = 1.0f;
 	lis.dir3 = -1.0f;
+
 	return lis;
 }
 
@@ -152,9 +185,9 @@ Leg::Leg(LegInitStruct lis)
 
 void Leg::SetJointRotation()
 {
-	m_base.setState(m_dir1*(m_joints[m_chosenJoint].x - m_a1_off));
-	m_shoulder.setState(m_dir2*(m_joints[m_chosenJoint].y - m_a2_off));
-	m_knee.setState(m_dir3*(m_joints[m_chosenJoint].z - m_a3_off));
+	m_base.setState(m_dir1 * m_joints[m_chosenJoint].x);
+	m_shoulder.setState(m_dir2*m_joints[m_chosenJoint].y);
+	m_knee.setState(m_dir3*m_joints[m_chosenJoint].z);
 }
 
 void Leg::ForwardGeometry()

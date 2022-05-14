@@ -2,6 +2,7 @@
 
 #include "perif/servo.h"
 #include "util/linalg.h"
+#include "util/trigonometry.h"
 
 namespace quad
 {
@@ -12,6 +13,9 @@ enum LegID
 	LID_RB = 2,
 	LID_LB = 3
 };
+
+mth::float2 Section(quad::LegID legID);
+
 
 struct LegInitStruct
 {

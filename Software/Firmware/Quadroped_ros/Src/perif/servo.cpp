@@ -31,7 +31,8 @@ uint32_t channelConvertedToLL[] = {
 };
 
 Servo::Servo(ServoInitStruct sis)
-:m_timer(sis.timer), m_channel(sis.channel), m_assemblyOffset(sis.assemblyOffset)
+:m_timer(sis.timer), m_channel(sis.channel), m_assemblyOffset(sis.assemblyOffset),
+m_negativeLimit(sis.negativeLimit), m_positiveLimit(sis.positiveLimit)
 {
 	setState(0.0f);
 }
@@ -47,10 +48,10 @@ float Servo::getAssemblyOffset()
 void Servo::setState(float r)
 {
 	m_state = r + m_assemblyOffset;
-	if (m_state < -mth::pi)
-		m_state = -mth::pi;
-	else if (m_state > mth::pi) // from mechanics TODO: place a define
-		m_state = mth::pi;
+	if (m_state < -m_negativeLimit)
+		m_state = -m_negativeLimit;
+	else if (m_state > m_positiveLimit) // from mechanics TODO: place a define
+		m_state = m_positiveLimit;
 	setServoState[m_channel](m_timer, m_state);
 }
 float Servo::getState()

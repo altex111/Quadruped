@@ -3,6 +3,8 @@
 #include "quad/quadruped.h"
 #include "util/fifo.h"
 
+#include <list>
+
 namespace quad
 {
 struct QuadAction
@@ -23,10 +25,12 @@ class WalkScript
 	float m_maxTurnAtOnce;
 	float m_bellyy;
 	float m_legLift;
+
 	float m_legXPos;
 	float m_legZRetracted;
 	float m_legStretchHalf;
 
+	float m_criticalAngle;
 	float m_legMaxStretchHalf;
 	float m_legRReachOffset;
 	float m_legRReachMax;
@@ -48,6 +52,11 @@ private:
 	void AddLegWalkStraightRightBalanced(float ratio);
 	void AddLegWalkStraightLeftBalanced(float ratio);
 	void AddLegBodyElementsWalkStraight(float distance);
+	void AddLegBodyElementsMove(float *distance,uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quad::LegID* stepOrder);
+	void calculateOptimalsteps(float *legStretchHalf, float *turnAtOnce, float distance, float relativeHeadding);
+	float calculateMaxLegStretchHalf(mth::float2 motionDirection);
+	float legStretchHalf(mth::float2 motionDirection, quad::LegID legId);
+	std::list<mth::float2> findTrajectoryIntersections(mth::float2 motionDirection, mth::float2 section);
 	mth::float3 getLegRFStartPos();
 	mth::float3 getLegLFStartPos();
 	mth::float3 getLegRBStartPos();
@@ -66,6 +75,7 @@ public:
 	void AddPathElementTurn(float angle);
 	void AddPathElementWalkStraight(float distance);
 	void AddPathElementCircle(float circleR, float rotation);
+	void AddPathElementMove(mth::float2 relativePos, float relativeHeadding = 0);
 	void Clear();
 	void Update(float deltaTime);
 };

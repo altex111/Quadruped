@@ -54,7 +54,7 @@ Walk::Walk()
 	m_walkScipt(m_quad),
 	m_quadEnabled(true),
 	m_time(0.0f),
-	m_walking(false)
+	m_walking(true)
 {
 
 }
@@ -77,12 +77,13 @@ void Walk::Loop()
 		}
 		else
 		{
-			mth::float2circle m_legCenterPos(1.3, mth::pi*0.25);
+			mth::float2circle m_legCenterPos(1.3f, mth::pi*0.25f);
+			float hight = 0.3;
 			//m_quad.getLegLB().setJointStates(mth::float3(-mth::pi*0.25f, 0.5f, 1.3f));
 			//m_quad.getLegRB().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
 			//m_quad.getLegLF().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
 			//m_quad.getLegRF().setJointStates(mth::float3(-mth::pi*0.25f, 0.5f, 1.3f));
-			m_quad.getLegLF().setPosition(mth::float3(-(m_walkScipt.m_legBasePos.y + m_legCenterPos.getY()), -0.3f, m_walkScipt.m_legBasePos.x + m_legCenterPos.getX()));
+//			m_quad.getLegLF().setPosition(mth::float3(-(m_walkScipt.m_legBasePos.y + m_legCenterPos.getY()), -hight, m_walkScipt.m_legBasePos.x + m_legCenterPos.getX()));
 //			m_quad.getLegRB().getShoulderServo().setState(mth::pi * a);
 //			PushUps();
 		}

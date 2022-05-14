@@ -8,6 +8,8 @@ namespace mth
 	class float3;
 	class float4;
 
+	class float2circle;
+
 	class float2x2;
 	class float3x3;
 	class float4x4;
@@ -33,6 +35,8 @@ namespace mth
 		void Abs();
 		void Normalize();
 		float2 Normalized() const;
+		float2circle getRA() const;
+		float Slope() const;
 		float2 operator+(const float2 v) const;
 		float2 operator-(const float2 v) const;
 		float2 operator*(const float2 v) const;
@@ -53,6 +57,7 @@ namespace mth
 		float2& operator/=(const float f);
 		float2& operator=(const float f);
 		float2 operator*(const float2x2& m) const;
+		bool isNear(float2 v, float eps);
 		float operator()(const int i) const;
 		float& operator()(const int i);
 		operator float3() const;
@@ -185,7 +190,7 @@ namespace mth
 		void Invert();
 		float2x2 Inverse() const;
 		void Transpose();
-		float2x2 Trasposed() const;
+		float2x2 Transposed() const;
 		float2x2 operator*(const float2x2& m) const;
 		float2x2& operator*=(const float2x2& m);
 		float2x2 operator+(const float2x2& m) const;

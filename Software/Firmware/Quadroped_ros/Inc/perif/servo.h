@@ -1,6 +1,7 @@
 #pragma once
 
 #include "cmain.h"
+#include "util/linalg.h"
 #include <functional>
 
 namespace quad
@@ -15,9 +16,12 @@ enum TimerChannel:uint32_t
 
 struct ServoInitStruct
 {
+	ServoInitStruct(): positiveLimit(mth::pi * 0.345/*0.345*/), negativeLimit(mth::pi * 0.345) {}
 	TIM_TypeDef *timer;
 	TimerChannel channel;
 	float assemblyOffset;
+	float positiveLimit;
+	float negativeLimit;
 };
 
 class Servo
@@ -25,6 +29,8 @@ class Servo
 	TIM_TypeDef *m_timer;
 	TimerChannel m_channel;
 	float m_assemblyOffset;
+	float m_positiveLimit;
+	float m_negativeLimit;
 	float m_state;
 
 public:
