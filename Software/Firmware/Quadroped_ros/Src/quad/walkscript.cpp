@@ -141,13 +141,13 @@ namespace quad
 		}
 		*distance -= legStretchHalf;
 		mth::float2 point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
-		point = RelativePointOnACircle(point, turnAtOnce);
+		//point = RelativePointOnACircle(point, turnAtOnce);
 		AddPathElementLegMovement(stepOrder[*legCount], mth::float2(point.y,point.x));
 
 		(* legCount)++;
 
 		point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
-		point = RelativePointOnACircle(point, turnAtOnce);
+		//point = RelativePointOnACircle(point, turnAtOnce);
 		AddPathElementLegMovement(stepOrder[*legCount], mth::float2(point.y, point.x));
 
 		(* legCount)++;
@@ -456,7 +456,7 @@ namespace quad
 
 	void WalkScript::MoveBody(float deltaTime)
 	{
-		mth::float3 delta = { -deltaTime * m_action.goalPos.x, 0.0f, deltaTime * m_action.goalPos.y };
+		mth::float3 delta = { deltaTime * m_action.goalPos.x, 0.0f, deltaTime * m_action.goalPos.y };
 		delta = mth::float3x3::RotationY(m_action.rot)*delta;
 		for (Leg& l : m_quad.getLegs())
 			l.setPosition(mth::float3x3::RotationY(-deltaTime * m_action.rot)*(-delta + l.getPosition()));
@@ -507,7 +507,7 @@ namespace quad
 	{
 		if (!m_running)
 		{
-			AddPathElementMove(mth::float2(2.0f,1.0f), 0.0f);
+			AddPathElementMove(mth::float2(2.0f,0.f), 0.0f);
 //			AddPathElementMove(mth::float2(0.0f,-2.0f), 0.0f);
 //			AddPathElementMove(mth::float2(-2.0f,1.0f), 0.0f);
 			//todo there are previus solutions AddPathElementWalkStraight(2.0f);
