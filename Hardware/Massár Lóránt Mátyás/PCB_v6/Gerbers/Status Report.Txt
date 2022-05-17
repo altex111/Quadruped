@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : PCB Document [pcb.PcbDoc]
+   Generated File[Quadruped.TXT]
+   Generated File[Quadruped.LDP]
+   Generated File[Quadruped.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 17:56:14 On 2020-06-22
