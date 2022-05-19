@@ -387,9 +387,9 @@ namespace quad
 		while (distance > m_EPS)
 		{
 			AddLegBodyElementsMove(&distance,&legCount, legStretchHalf, turnAtOnce, relativePos, &stepOrder[0]);
-			mth::float2circle posRA = relativePos.getRA();
-			posRA.a -= turnAtOnce;
-			relativePos = mth::float2(posRA.getY(), posRA.getX());
+//			mth::float2circle posRA = relativePos.getRA();
+//			posRA.a -= turnAtOnce;
+//			relativePos = mth::float2(posRA.getY(), posRA.getX());
 		}
 	}
 
@@ -482,6 +482,10 @@ namespace quad
 				m_prevAction.goalPos.y = prevPos.z;
 			}
 		}
+		else
+		{
+			return;
+		}
 	}
 	float WalkScript::FinishPreviousAction(float timeLeft)
 	{
@@ -507,9 +511,9 @@ namespace quad
 	{
 		if (!m_running)
 		{
-			AddPathElementMove(mth::float2(2.0f,0.f), 0.0f);
-//			AddPathElementMove(mth::float2(0.0f,-2.0f), 0.0f);
-//			AddPathElementMove(mth::float2(-2.0f,1.0f), 0.0f);
+			AddPathElementMove(mth::float2(2.0f,1.0f), 0.0f);
+			AddPathElementMove(mth::float2(0.0f,-2.0f), 0.0f);
+			AddPathElementMove(mth::float2(-2.0f,1.0f), 0.0f);
 			//todo there are previus solutions AddPathElementWalkStraight(2.0f);
 			//todo there are previus solutions AddPathElementTurn(-mth::pi*0.5f);
 

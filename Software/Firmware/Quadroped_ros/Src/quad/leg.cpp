@@ -49,7 +49,7 @@ LegInitStruct GetLegRBInitStruct()
 	lis.a1_off = mth::pi * 0.0f;
 	lis.a2_off = mth::pi * 0.13f;
 	lis.a3_off = mth::pi * 0.25f;
-	lis.dir1 = 1.0f;
+	lis.dir1 = -1.0f;
 	lis.dir2 = 1.0f;
 	lis.dir3 = -1.0f;
 	return lis;
@@ -83,7 +83,7 @@ LegInitStruct GetLegLBInitStruct()
 	lis.a1_off = mth::pi * 0.0f;
 	lis.a2_off = mth::pi * -0.12f;
 	lis.a3_off = mth::pi * -0.25f;
-	lis.dir1 = 1.0f;
+	lis.dir1 = -1.0f;
 	lis.dir2 = -1.0f;
 	lis.dir3 = 1.0f;
 	return lis;
@@ -117,7 +117,7 @@ LegInitStruct GetLegRFInitStruct()
 	lis.a1_off = mth::pi * 0.0f;
 	lis.a2_off = mth::pi * -0.12f;
 	lis.a3_off = mth::pi * -0.25f;
-	lis.dir1 = 1.0f;
+	lis.dir1 = -1.0f;
 	lis.dir2 = -1.0f;
 	lis.dir3 = 1.0f;
 	return lis;
@@ -151,7 +151,7 @@ LegInitStruct GetLegLFInitStruct()
 	lis.a1_off = mth::pi * 0.0f;
 	lis.a2_off = mth::pi * 0.13f;
 	lis.a3_off = mth::pi * 0.25f;
-	lis.dir1 = 1.0f;
+	lis.dir1 = -1.0f;
 	lis.dir2 = 1.0f;
 	lis.dir3 = -1.0f;
 

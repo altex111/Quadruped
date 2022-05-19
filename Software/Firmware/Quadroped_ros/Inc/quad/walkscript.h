@@ -16,7 +16,7 @@ struct QuadAction
 
 class WalkScript
 {
-	util::fifo<QuadAction, 16> m_script;
+	util::fifo<QuadAction, 64> m_script;
 	QuadAction m_action;
 	QuadAction m_prevAction;
 	Quadruped& m_quad;
