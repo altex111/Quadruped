@@ -3,7 +3,7 @@
 #include "cmain.h"
 #include <functional>
 
-namespace quad
+namespace quadroped
 {
 
 struct IO

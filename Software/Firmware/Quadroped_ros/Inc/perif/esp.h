@@ -26,7 +26,7 @@
 #define WIFI_TX_STATE_PENDING 0
 #define WIFI_TX_STATE_RECV 1
 
-namespace quad
+namespace quadroped
 {
 
 class ESP

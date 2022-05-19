@@ -2,7 +2,7 @@
  * task_walking.h
  *
  *  Created on: 2020. okt. 09.
- *      Author: Massár Lóránt
+ *      Author: Massï¿½r Lï¿½rï¿½nt
  */
 
 #pragma once
@@ -17,7 +17,7 @@ namespace task
 class TaskWalk : public Task
 {
 private:
-    quad::Walk walk;
+    quadroped::Walk walk;
     MessageBufferHandle_t RosToWalkMessage;
     WalkCommand walk_Command;
 

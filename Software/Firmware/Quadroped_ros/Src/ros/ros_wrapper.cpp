@@ -140,12 +140,12 @@ void ROSNode::imu_inDebugCallback(const std_msgs::String& imu_debug_msg)
 	imu_debug_status = DEBUG_REQUEST_STATUS_REQUESTED;
 }
 
-void ROSNode::walk_inCommandCallback(const std_msgs::String& walk_command_msg)
+void ROSNode::walk_inCommandCallback(const geometry_msgs::Pose& pose_msg)
 {
 	const char* commandParameterPosition = NULL;
 	float commandParameter = 0.0f;
 
-	if(0 == strncmp(walk_command_msg.data, walk_command_forward, strlen(walk_command_forward)))
+	/*if(0 == strncmp(walk_command_msg.data, walk_command_forward, strlen(walk_command_forward)))
 	{
 		walk_Command.direction = WALK_COMMAND_FORWARD;
 
@@ -197,10 +197,16 @@ void ROSNode::walk_inCommandCallback(const std_msgs::String& walk_command_msg)
 	{
 		/* Invalid command */
 		/* todo error report */
-		return;
-	}
+		//return;
+	/*}*/
 
-	/* Set the walk_command_status */
+	//Get position from pose
+	walk_Command.x = pose_msg.position.x;
+	walk_Command.y = pose_msg.position.y;
+
+	//Get heading from quat
+	walk_Command.phi = asin(pose_msg.orientation.x) * 2.0f;
+
 	walk_command_status = true;
 }
 

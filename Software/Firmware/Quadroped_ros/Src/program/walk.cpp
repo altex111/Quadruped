@@ -1,7 +1,7 @@
 #include <memory.h>
 #include <program/walk.h>
 
-namespace quad
+namespace quadroped
 {
 void Walk::PushUps()
 {
@@ -160,7 +160,7 @@ void Walk::Loop()
 
 void Walk::StoreCommand(WalkCommand command)
 {
-	if(WALK_COMMAND_FORWARD == command.direction)
+	/*if(WALK_COMMAND_FORWARD == command.direction)
 	{
 		m_walkScipt.AddPathElementWalkStraight(command.parameter);
 	}
@@ -192,7 +192,7 @@ void Walk::StoreCommand(WalkCommand command)
 	else
 	{
 		/* Invalid command */
-	}
+	//}
 }
 
 }

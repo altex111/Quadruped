@@ -2,7 +2,7 @@
 #include "util/linalg.h"
 #include <array>
 
-namespace quad
+namespace quadroped
 {
 uint32_t DegToCompareValue(float deg, TIM_TypeDef* tim)
 {

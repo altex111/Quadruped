@@ -4,7 +4,7 @@
 #include "util/linalg.h"
 #include <functional>
 
-namespace quad
+namespace quadroped
 {
 enum TimerChannel:uint32_t
 {

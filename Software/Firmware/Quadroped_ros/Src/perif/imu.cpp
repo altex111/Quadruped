@@ -6,7 +6,7 @@
 #define IMU_CALIBRATIONRESET	60000u
 #define IMU_REQUESTTIMEOUT		10u
 
-namespace quad
+namespace quadroped
 {
 IMU::IMU(USART_TypeDef *uart):
 		m_BNOcomm(uart)

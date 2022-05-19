@@ -31,13 +31,13 @@
 
 namespace ros
 {
-typedef NodeHandle_<quad::STM32Hardware> NodeHandle; // default 25, 25, 512, 512
+typedef NodeHandle_<quadroped::STM32Hardware> NodeHandle; // default 25, 25, 512, 512
 
 class ROSNode
 {
 private:
 	ros::NodeHandle nh;
-	quad::ESP m_Esp;
+	quadroped::ESP m_Esp;
 
 	EventBits_t schedulerEventBits;
 
@@ -68,8 +68,8 @@ private:
 	sensor_msgs::LaserScan lidar_scan;
 
 	/* Walk related topics */
-	ros::Subscriber<std_msgs::String, ROSNode> walk_inCommand;
-	void walk_inCommandCallback(const std_msgs::String& walk_command_msg);
+	ros::Subscriber<geometry_msgs::Pose, ROSNode> walk_inCommand;
+	void walk_inCommandCallback(const geometry_msgs::Pose& pose_msg);
 
 	const char walk_command_forward[8];
 	const char walk_command_left[5];
@@ -89,7 +89,7 @@ private:
 
 public:
 	ROSNode();
-	inline quad::ESP& getESP() {return m_Esp;}
+	inline quadroped::ESP& getESP() {return m_Esp;}
 
 	EventBits_t& Get_schedulerEventBits() {return schedulerEventBits;}
 

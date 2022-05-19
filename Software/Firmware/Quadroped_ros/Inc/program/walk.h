@@ -5,13 +5,13 @@
 #include "cmain.h"
 #include <cmath>
 
-namespace quad
+namespace quadroped
 {
 
 class Walk
 {
-	quad::Quadruped m_quad;
-	quad::WalkScript m_walkScipt;
+	quadroped::Quadruped m_quad;
+	quadroped::WalkScript m_walkScipt;
 	bool m_quadEnabled;
 
 	float m_time;

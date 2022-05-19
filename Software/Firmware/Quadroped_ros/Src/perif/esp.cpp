@@ -6,7 +6,7 @@
 #define WIFI_TCP_RETRY 3000
 #define WIFI_1_MS_WAIT 1
 
-namespace quad
+namespace quadroped
 {
 ESP::ESP(USART_TypeDef *uart):
 		m_ESPcomm(uart)

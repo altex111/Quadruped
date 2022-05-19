@@ -3,7 +3,7 @@
 #include <quad/leg.h>
 #include <array>
 
-namespace quad {
+namespace quadroped {
 
 class Quadruped {
 	std::array<Leg, 4> m_legs;

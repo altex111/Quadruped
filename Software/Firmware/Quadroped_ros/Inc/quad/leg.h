@@ -4,7 +4,7 @@
 #include "util/linalg.h"
 #include "util/trigonometry.h"
 
-namespace quad
+namespace quadroped
 {
 enum LegID
 {
@@ -14,7 +14,7 @@ enum LegID
 	LID_LB = 3
 };
 
-mth::float2 Section(quad::LegID legID);
+mth::float2 Section(quadroped::LegID legID);
 
 
 struct LegInitStruct

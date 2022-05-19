@@ -1,6 +1,6 @@
 #include <quad/quadruped.h>
 
-namespace quad
+namespace quadroped
 {
 Quadruped::Quadruped()
 :m_legs({Leg(GetLegRFInitStruct()),Leg(GetLegLFInitStruct()),Leg(GetLegRBInitStruct()),Leg(GetLegLBInitStruct())})

@@ -4,7 +4,7 @@
 #define MIN(a, b) a<b?a:b
 #define MAX(a, b) a>b?a:b
 
-namespace quad
+namespace quadroped
 {
 	void WalkScript::AddPathElementLegMovement(LegID legid, mth::float2 pos)
 	{
@@ -71,7 +71,7 @@ namespace quad
 			AddLegWalkStraightLeftBalanced(ratio);
 		AddPathElementBodyMovement(mth::float2(0.0f, m_legStretchHalf*ratio), 0.0f);
 	}
-	void WalkScript::AddLegBodyElementsMove(float *distance,uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quad::LegID* stepOrder)
+	void WalkScript::AddLegBodyElementsMove(float *distance,uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quadroped::LegID* stepOrder)
 	{
 		float motionAngle = motionDirection.getRA().a;
 		motionDirection.Normalize();
@@ -199,12 +199,12 @@ namespace quad
 	float WalkScript::calculateMaxLegStretchHalf(mth::float2 motionDirection)
 	{
 		float legMaxStepHalfs[4] = {0,0,0,0};
-		legMaxStepHalfs[quad::LID_RF] = legStretchHalf(motionDirection, quad::LID_RF);
-		legMaxStepHalfs[quad::LID_LF] = legStretchHalf(motionDirection, quad::LID_LF);
-		legMaxStepHalfs[quad::LID_RB] = legStretchHalf(motionDirection, quad::LID_RB);
-		legMaxStepHalfs[quad::LID_LB] = legStretchHalf(motionDirection, quad::LID_LB);
+		legMaxStepHalfs[quadroped::LID_RF] = legStretchHalf(motionDirection, quadroped::LID_RF);
+		legMaxStepHalfs[quadroped::LID_LF] = legStretchHalf(motionDirection, quadroped::LID_LF);
+		legMaxStepHalfs[quadroped::LID_RB] = legStretchHalf(motionDirection, quadroped::LID_RB);
+		legMaxStepHalfs[quadroped::LID_LB] = legStretchHalf(motionDirection, quadroped::LID_LB);
 
-		float minLegStepHalf = legMaxStepHalfs[quad::LID_RF];
+		float minLegStepHalf = legMaxStepHalfs[quadroped::LID_RF];
 		for (uint8_t i = 1; i < 4; i++)
 		{
 			if (legMaxStepHalfs[i] < minLegStepHalf)
@@ -216,10 +216,10 @@ namespace quad
 	/*
 	* Calculates the legStrechHalf for a specific leg
 	* Input:	(mth::float2) motionDirection:	The direction of the robots motion (Normal vector)
-	*			(quad::LegID) legId:			A specific legs ID
+	*			(quadroped::LegID) legId:			A specific legs ID
 	* Output:	(float): The length of a specific legs strechHalf
 	*/
-	float WalkScript::legStretchHalf(mth::float2 motionDirection, quad::LegID legId)
+	float WalkScript::legStretchHalf(mth::float2 motionDirection, quadroped::LegID legId)
 	{
 		std::list<mth::float2> foundPoints = findTrajectoryIntersections(motionDirection, Section(legId));
 
@@ -377,7 +377,7 @@ namespace quad
 		//Comment out, when turning is working
 		relativeHeadding = 0;
 		uint8_t legCount = 0;
-		quad::LegID stepOrder[4] = { LID_RF,LID_LF,LID_RB,LID_LB };
+		quadroped::LegID stepOrder[4] = { LID_RF,LID_LF,LID_RB,LID_LB };
 		float legStretchHalf = 0;
 		float turnAtOnce = 0;
 		float distance = relativePos.Length();

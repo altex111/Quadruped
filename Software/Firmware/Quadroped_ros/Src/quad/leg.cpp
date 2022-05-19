@@ -1,18 +1,18 @@
 #include <quad/leg.h>
 #include <cmath>
 
-namespace quad
+namespace quadroped
 {
 
-mth::float2 Section(quad::LegID legID)
+mth::float2 Section(quadroped::LegID legID)
 {
-	if (legID == quad::LID_RF)
+	if (legID == quadroped::LID_RF)
 		return mth::float2(1, 1);
 //		return mth::float2(-1, 1);
-	else if (legID == quad::LID_LF)
+	else if (legID == quadroped::LID_LF)
 		return mth::float2(1, -1);
 //		return mth::float2(1, 1);
-	else if (legID == quad::LID_RB)
+	else if (legID == quadroped::LID_RB)
 		return mth::float2(-1, 1);
 //		return mth::float2(-1, -1);
 	else //(legID == quad::LID_LB)

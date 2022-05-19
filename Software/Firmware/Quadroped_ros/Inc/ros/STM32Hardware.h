@@ -41,7 +41,7 @@
 
 extern uint32_t systick;
 
-namespace quad
+namespace quadroped
 {
 	class STM32Hardware {
 	  protected:

@@ -3,7 +3,7 @@
 #define LIDAR_1_MS_WAIT 1
 #define LIDAR_2_MS_WAIT 2
 
-namespace quad
+namespace quadroped
 {
 LIDAR::LIDAR(USART_TypeDef *uart):
 		m_LIDARcomm(uart),

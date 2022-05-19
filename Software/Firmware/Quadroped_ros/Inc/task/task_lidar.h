@@ -2,7 +2,7 @@
  * task_lidar.h
  *
  *  Created on: 2020. okt. 09.
- *      Author: Massár Lóránt
+ *      Author: Massï¿½r Lï¿½rï¿½nt
  */
 
 #pragma once
@@ -21,7 +21,7 @@ namespace task
 class TaskLIDAR : public Task
 {
 private:
-	quad::LIDAR lidar;
+	quadroped::LIDAR lidar;
 	EventGroupHandle_t SchedulerEventGroup;
 	MessageBufferHandle_t LidarToRosMessage;
 
@@ -30,7 +30,7 @@ public:
 
     void Process();
 
-    inline quad::LIDAR& getLIDAR() {return lidar;}
+    inline quadroped::LIDAR& getLIDAR() {return lidar;}
 };
 
 }

@@ -9,7 +9,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-namespace quad
+namespace quadroped
 {
 
 class IMU

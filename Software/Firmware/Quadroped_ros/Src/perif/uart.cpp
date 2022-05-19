@@ -1,6 +1,6 @@
 #include "perif/uart.h"
 
-namespace quad
+namespace quadroped
 {
 UART::UART(USART_TypeDef *uart)
 :m_uart(uart), m_inData(), m_outData()

@@ -136,7 +136,7 @@ int main()
 	taskWalk->Create();
 	taskADC->Create();
 
-	quad::IO::led3.Set();
+	quadroped::IO::led3.Set();
 
 	/* Start scheduler */
 	task::Task::StartScheduler();

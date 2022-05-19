@@ -115,7 +115,8 @@ typedef struct __attribute__((__packed__))ImuRequest{
 #define IMU_REQUEST_DEFAULT {.header = IMUREQUEST_HEADER_START, .direction = IMUREQUEST_DIRECTION_READ, .address = CHIP_ID, .length = 0u}
 
 typedef struct __attribute__((__packed__))WalkCommand{
-	uint8_t direction;
-	float parameter;
+	float x;
+	float y;
+	float phi;
 } WalkCommand;
 /* #### #### */

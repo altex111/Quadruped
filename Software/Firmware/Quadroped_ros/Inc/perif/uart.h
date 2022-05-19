@@ -4,7 +4,7 @@
 #include <functional>
 #include "program/common.h"
 
-namespace quad
+namespace quadroped
 {
 
 class UART

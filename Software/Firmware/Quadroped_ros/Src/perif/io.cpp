@@ -1,7 +1,7 @@
 #include "perif/io.h"
 #include "cmain.h"
 
-namespace quad
+namespace quadroped
 {
 IO::Button::Button(GPIO_TypeDef *port, uint32_t pin)
 :	m_port(port),
