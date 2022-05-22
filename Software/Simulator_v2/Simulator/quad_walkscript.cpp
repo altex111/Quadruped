@@ -628,7 +628,7 @@ namespace quad
 			
 			//m_script.AddPathElementWalkStraight(2.0f);
 			//m_script.AddPathElementTurn(-mth::pi*0.5f);
-			m_script.AddPathElementMove(mth::float2(1.0f, 0.5f), mth::pi * -0.3f);
+			//m_script.AddPathElementMove(mth::float2(1.0f, 0.5f), mth::pi * -0.3f);
 			//m_script.AddPathElementMove(mth::float2(0.0f, 0.0f), mth::pi * 2.0f);
 			//m_script.AddPathElementMove(mth::float2(-2.0f, 1.0f), mth::pi * -0.5f);
 			
