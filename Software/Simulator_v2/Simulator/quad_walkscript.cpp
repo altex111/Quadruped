@@ -380,7 +380,7 @@ namespace quad
 	WalkScript::WalkScript() :
 		m_maxTurnAtOnce(mth::pi * 0.25f*0.5f),
 
-		m_bellyy(0.3f),
+		m_bellyy(0.6f),
 		m_legLift(0.2f),
 		m_legXPos(0.9f),
 		m_legZRetracted(0.4f),
@@ -390,15 +390,17 @@ namespace quad
 		m_legZBasePos(0.74962f),
 		m_legMaxStretchHalf(0.5),//This is going to be overwriten
 		m_legBasePos(0.74962f, 0.52462f),
-		m_legCenterPos(1.3f, mth::pi * 0.25f),
-		m_legRReachOffset(0.7f),
-		m_legRReachMax(1.2f),
+		m_legCenterPos(1.1f, mth::pi * 0.25f),
+		m_legRReachOffset(0.5f),
+		m_legRReachMax(1.0f),
 		m_EPS(0.001),
 
 		m_rightBalanced(true) 
 	{
 		m_criticalAngle = atan2f(m_legBasePos.y + m_legCenterPos.getY(),
 								 m_legBasePos.x + m_legCenterPos.getX());
+		m_legCenterPos = mth::float2circle((2 * m_legRReachOffset + m_legRReachMax) / 2, mth::pi * 0.25);
+
 	}
 
 	void WalkScript::AddPathElementTurn(float angle)
@@ -513,22 +515,22 @@ namespace quad
 	mth::float3 WalkScript::getLegRFStartPos()
 	{
 		//return { m_legXPos, -m_bellyy, m_legZRetracted + m_legStretchHalf };
-		return { m_legXBasePos + cos(mth::pi * 0.25f) * 1.4f, -m_bellyy, m_legZBasePos + sin(mth::pi * 0.25f) * 1.4f };
+		return { m_legXBasePos + m_legCenterPos.getY(), -m_bellyy, m_legZBasePos + m_legCenterPos.getX()};
 	}
 	mth::float3 WalkScript::getLegLFStartPos()
 	{
 		//return { -m_legXPos, -m_bellyy, m_legZRetracted + m_legStretchHalf };
-		return { -(m_legXBasePos + 0.8f), -m_bellyy, m_legZBasePos + 0.8f };
+		return { -(m_legXBasePos + m_legCenterPos.getY()), -m_bellyy, m_legZBasePos + m_legCenterPos.getX()};
 	}
 	mth::float3 WalkScript::getLegRBStartPos()
 	{
 		//return { m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) };
-		return { m_legXBasePos + 0.8f, -m_bellyy, -(m_legZBasePos + 0.8f) };
+		return { m_legXBasePos + m_legCenterPos.getY(), -m_bellyy, -(m_legZBasePos + m_legCenterPos.getX()) };
 	}
 	mth::float3 WalkScript::getLegLBStartPos()
 	{
 		//return mth::float3({ -m_legXPos, -m_bellyy, -(m_legZRetracted + m_legStretchHalf) });
-		return { -(m_legXBasePos + 0.8f), -m_bellyy, -(m_legZBasePos + 0.8f) };
+		return { -(m_legXBasePos + m_legCenterPos.getY()), -m_bellyy, -(m_legZBasePos + m_legCenterPos.getX()) };
 	}
 	float WalkScript::getBellyY()
 	{
@@ -626,8 +628,8 @@ namespace quad
 			
 			//m_script.AddPathElementWalkStraight(2.0f);
 			//m_script.AddPathElementTurn(-mth::pi*0.5f);
-			m_script.AddPathElementMove(mth::float2(5.0f, 0.0f), mth::pi * -0.5f);
-			m_script.AddPathElementMove(mth::float2(0.0f, 0.0f), mth::pi * 2.0f);
+			m_script.AddPathElementMove(mth::float2(1.0f, 0.5f), mth::pi * -0.3f);
+			//m_script.AddPathElementMove(mth::float2(0.0f, 0.0f), mth::pi * 2.0f);
 			//m_script.AddPathElementMove(mth::float2(-2.0f, 1.0f), mth::pi * -0.5f);
 			
 
