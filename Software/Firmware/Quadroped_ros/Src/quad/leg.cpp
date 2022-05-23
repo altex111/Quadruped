@@ -68,7 +68,7 @@ LegInitStruct GetLegLBInitStruct()
 	lis.shoulderServo.positiveLimit = mth::pi * 0.34f + 0.02f;
 	lis.kneeServo.timer = TIM3;
 	lis.kneeServo.channel = TimerChannel::CHANNEL1;
-	lis.kneeServo.assemblyOffset = mth::pi * -0.25f + (-0.2f);
+	lis.kneeServo.assemblyOffset = mth::pi * -0.25f + (-0.1f);
 	lis.kneeServo.positiveLimit = mth::pi * 0.34f - 0.2f;
 	lis.ox = -0.52462f;
 	lis.oy = 0.1285f;

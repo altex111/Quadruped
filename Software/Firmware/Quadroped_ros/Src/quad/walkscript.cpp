@@ -301,9 +301,9 @@ namespace quadroped
 		m_prevAction(),
 		m_quad(q),
 		m_time(0.0f),
-		m_speed(0.5f),
+		m_speed(1.0f),
 		m_maxTurnAtOnce(mth::pi*0.25f),
-		m_bellyy(0.3f),
+		m_bellyy(0.5f),
 		m_legLift(0.2f),
 		m_legXPos(0.8f),
 		m_legZRetracted(0.3f),
@@ -314,13 +314,13 @@ namespace quadroped
 		m_legMaxStretchHalf(0.5),//This is going to be overwriten
 		m_legBasePos(0.74962f, 0.52462f),
 		m_legCenterPos(1.3f, mth::pi * 0.25f),
-		m_legRReachOffset(0.7f),
-		m_legRReachMax(1.2f),
+		m_legRReachOffset(0.5f),
+		m_legRReachMax(1.0f),
 		m_EPS(0.01)
 	{
+		m_legCenterPos.r = (2 * m_legRReachOffset + m_legRReachMax) / 2;
 		m_criticalAngle = atan2f(m_legBasePos.y + m_legCenterPos.getY(),
 								 m_legBasePos.x + m_legCenterPos.getX());
-
 		m_quad.EnableLegs();
 		m_quad.getLegRF().setPosition(getLegRFStartPos());
 		m_quad.getLegLF().setPosition(getLegLFStartPos());
