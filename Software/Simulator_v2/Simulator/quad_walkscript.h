@@ -46,7 +46,7 @@ namespace quad
 		void AddLegWalkStraightLeftBalanced(float ratio);
 		void AddLegBodyElementsWalkStraight(float distance);
 
-		void AddLegBodyElementsMove(float *distance,uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quad::LegID* stepOrder);
+		void AddLegBodyElementsMove(float *distance,uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quad::LegID* stepOrder, uint8_t motionFlag);
 
 		void calculateOptimalsteps(float *legStretchHalf, float *turnAtOnce, float distance, float relativeHeadding);
 		float calculateMaxLegStretchHalf(mth::float2 motionDirection);

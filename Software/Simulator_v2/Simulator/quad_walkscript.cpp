@@ -71,9 +71,10 @@ namespace quad
 	}
 
 	void WalkScript::AddLegBodyElementsMove(float *distance, uint8_t *legCount,
-		float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quad::LegID *stepOrder)
+		float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quad::LegID *stepOrder, uint8_t motionFlag)
 	{
 		float motionAngle = motionDirection.getRA().a;
+		mth::float2 point;
 		motionDirection.Normalize();
 
 		if ((* legCount) == 0)
@@ -138,9 +139,17 @@ namespace quad
 					stepOrder[3] = LID_RB;
 				}
 			}
+			if (motionFlag)
+			{
+				//point = Section(stepOrder[2]) * (m_legBasePos + m_legCenterPos.getXY());
+				//AddPathElementLegMovement(stepOrder[2], mth::float2(point.y, point.x));
+				//point = Section(stepOrder[3]) * (m_legBasePos + m_legCenterPos.getXY());
+				//AddPathElementLegMovement(stepOrder[3], mth::float2(point.y, point.x));
+
+			}
 		}
 		*distance -= legStretchHalf;
-		mth::float2 point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
+		point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
 		point = RelativePointOnACircle(point, turnAtOnce);
 		AddPathElementLegMovement(stepOrder[*legCount], mth::float2(point.y,point.x));
 
@@ -443,6 +452,7 @@ namespace quad
 		//TODO: Uncomment relativeHeadding if turn and move together
 		calculateOptimalsteps(&legStretchHalf, &turnAtOnce, distance, relativeHeadding);
 		
+		uint8_t motionFlag = 1;
 
 		//Works on that the robot can move and turn together
 		//	O-TODO: Redo all turning commands in move section
@@ -457,7 +467,8 @@ namespace quad
 		//	x-TODO: Comment and uncomment all things for the other movement method
 		while (distance > m_EPS)
 		{
-			AddLegBodyElementsMove(&distance,&legCount, legStretchHalf, turnAtOnce, relativePos, &stepOrder[0]);
+			AddLegBodyElementsMove(&distance,&legCount, legStretchHalf, turnAtOnce, relativePos, &stepOrder[0], motionFlag);
+			motionFlag = 0;
 			mth::float2circle posRA = relativePos.getRA();
 			posRA.a -= turnAtOnce;
 			relativePos = mth::float2(posRA.getY(), posRA.getX());
@@ -628,7 +639,7 @@ namespace quad
 			
 			//m_script.AddPathElementWalkStraight(2.0f);
 			//m_script.AddPathElementTurn(-mth::pi*0.5f);
-			//m_script.AddPathElementMove(mth::float2(1.0f, 0.5f), mth::pi * -0.3f);
+			m_script.AddPathElementMove(mth::float2(5.0f, 0.0f), mth::pi * -0.5f);
 			//m_script.AddPathElementMove(mth::float2(0.0f, 0.0f), mth::pi * 2.0f);
 			//m_script.AddPathElementMove(mth::float2(-2.0f, 1.0f), mth::pi * -0.5f);
 			
