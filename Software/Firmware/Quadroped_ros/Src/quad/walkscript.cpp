@@ -532,8 +532,8 @@ namespace quadroped
 //			AddPathElementMove(mth::float2(-2.0f,1.0f), 0.0f);
 
 			//Squer with turning
-			AddPathElementMove(mth::float2(3.0f, 0.0f), mth::pi * -0.75f);
-			AddPathElementMove(mth::float2(0.0f, 0.0f), mth::pi * 0.25f);
+//			AddPathElementMove(mth::float2(3.0f, 0.0f), mth::pi * -0.75f);
+//			AddPathElementMove(mth::float2(0.0f, 0.0f), mth::pi * 0.25f);
 
 			//todo there are previus solutions AddPathElementWalkStraight(2.0f);
 			//todo there are previus solutions AddPathElementTurn(-mth::pi*0.5f);
