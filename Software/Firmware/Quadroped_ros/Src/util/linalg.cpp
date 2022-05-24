@@ -46,6 +46,8 @@ namespace mth
 	}
 	void float2::Normalize()
 	{
+		if (this->Length() == 0)
+			return;
 		*this /= Length();
 	}
 	float2 float2::Normalized() const

@@ -77,8 +77,6 @@ void Walk::Loop()
 		}
 		else
 		{
-			mth::float2circle m_legCenterPos(1.3f, mth::pi*0.25f);
-			float hight = 0.3;
 			//m_quad.getLegLB().setJointStates(mth::float3(-mth::pi*0.25f, 0.5f, 1.3f));
 			//m_quad.getLegRB().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
 			//m_quad.getLegLF().setJointStates(mth::float3(mth::pi*0.25f, 0.5f, 1.3f));
@@ -160,6 +158,7 @@ void Walk::Loop()
 
 void Walk::StoreCommand(WalkCommand command)
 {
+	m_walkScipt.AddPathElementMove(mth::float2(command.x,command.y), command.phi);
 	/*if(WALK_COMMAND_FORWARD == command.direction)
 	{
 		m_walkScipt.AddPathElementWalkStraight(command.parameter);

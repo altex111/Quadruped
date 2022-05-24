@@ -205,7 +205,7 @@ void ROSNode::walk_inCommandCallback(const geometry_msgs::Pose& pose_msg)
 	walk_Command.y = pose_msg.position.y;
 
 	//Get heading from quat
-	walk_Command.phi = asin(pose_msg.orientation.x) * 2.0f;
+	walk_Command.phi = acos(pose_msg.orientation.x) * 2.0f;
 
 	walk_command_status = true;
 }

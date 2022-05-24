@@ -16,7 +16,7 @@ struct QuadAction
 
 class WalkScript
 {
-	util::fifo<QuadAction, 64> m_script;
+	util::fifo<QuadAction, 128> m_script;
 	QuadAction m_action;
 	QuadAction m_prevAction;
 	Quadruped& m_quad;
@@ -52,7 +52,7 @@ private:
 	void AddLegWalkStraightRightBalanced(float ratio);
 	void AddLegWalkStraightLeftBalanced(float ratio);
 	void AddLegBodyElementsWalkStraight(float distance);
-	void AddLegBodyElementsMove(float *distance,uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quadroped::LegID* stepOrder);
+	void AddLegBodyElementsMove(uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quadroped::LegID* stepOrder);
 	void calculateOptimalsteps(float *legStretchHalf, float *turnAtOnce, float distance, float relativeHeadding);
 	float calculateMaxLegStretchHalf(mth::float2 motionDirection);
 	float legStretchHalf(mth::float2 motionDirection, quadroped::LegID legId);

@@ -71,9 +71,10 @@ namespace quadroped
 			AddLegWalkStraightLeftBalanced(ratio);
 		AddPathElementBodyMovement(mth::float2(0.0f, m_legStretchHalf*ratio), 0.0f);
 	}
-	void WalkScript::AddLegBodyElementsMove(float *distance,uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quadroped::LegID* stepOrder)
+	void WalkScript::AddLegBodyElementsMove(uint8_t *legCount, float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quadroped::LegID* stepOrder)
 	{
 		float motionAngle = motionDirection.getRA().a;
+		mth::float2 point;
 		motionDirection.Normalize();
 
 		if ((* legCount) == 0)
@@ -139,15 +140,14 @@ namespace quadroped
 				}
 			}
 		}
-		*distance -= legStretchHalf;
-		mth::float2 point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
-		//point = RelativePointOnACircle(point, turnAtOnce);
+		point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
+		point = RelativePointOnACircle(point, turnAtOnce);
 		AddPathElementLegMovement(stepOrder[*legCount], mth::float2(point.y,point.x));
 
 		(* legCount)++;
 
 		point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
-		//point = RelativePointOnACircle(point, turnAtOnce);
+		point = RelativePointOnACircle(point, turnAtOnce);
 		AddPathElementLegMovement(stepOrder[*legCount], mth::float2(point.y, point.x));
 
 		(* legCount)++;
@@ -301,8 +301,8 @@ namespace quadroped
 		m_prevAction(),
 		m_quad(q),
 		m_time(0.0f),
-		m_speed(1.0f),
-		m_maxTurnAtOnce(mth::pi*0.25f),
+		m_speed(1.3f),
+		m_maxTurnAtOnce(mth::pi*0.25f*0.5f),
 		m_bellyy(0.5f),
 		m_legLift(0.2f),
 		m_legXPos(0.8f),
@@ -374,8 +374,6 @@ namespace quadroped
 	*/
 	void WalkScript::AddPathElementMove(mth::float2 relativePos, float relativeHeadding)
 	{
-		//Comment out, when turning is working
-		relativeHeadding = 0;
 		uint8_t legCount = 0;
 		quadroped::LegID stepOrder[4] = { LID_RF,LID_LF,LID_RB,LID_LB };
 		float legStretchHalf = 0;
@@ -383,13 +381,30 @@ namespace quadroped
 		float distance = relativePos.Length();
 		float relativeHeaddingAbs = fabsf(relativeHeadding);
 		m_legMaxStretchHalf = calculateMaxLegStretchHalf(relativePos.Normalized());
-		calculateOptimalsteps(&legStretchHalf, &turnAtOnce, distance, relativeHeadding);
-		while (distance > m_EPS)
+
+		calculateOptimalsteps(&legStretchHalf, &turnAtOnce, distance, 0 /*relativeHeadding*/); // Needed if walk and turn together
+		while (distance > m_EPS/* || relativeHeaddingAbs > m_EPS*/) //Needed if walk and turn together
 		{
-			AddLegBodyElementsMove(&distance,&legCount, legStretchHalf, turnAtOnce, relativePos, &stepOrder[0]);
-//			mth::float2circle posRA = relativePos.getRA();
-//			posRA.a -= turnAtOnce;
-//			relativePos = mth::float2(posRA.getY(), posRA.getX());
+			AddLegBodyElementsMove(&legCount, legStretchHalf, turnAtOnce, relativePos, &stepOrder[0]);
+			mth::float2circle posRA = relativePos.getRA();
+			posRA.a -= turnAtOnce;
+			relativePos = mth::float2(posRA.getY(), posRA.getX());
+
+			distance -= legStretchHalf;
+			relativeHeaddingAbs -= fabsf(turnAtOnce);
+		}
+
+		//Needed for walk and turn
+		calculateOptimalsteps(&legStretchHalf, &turnAtOnce, 0, relativeHeadding);
+		while (relativeHeaddingAbs > m_EPS)
+		{
+			AddLegBodyElementsMove(&legCount, legStretchHalf, turnAtOnce, relativePos, &stepOrder[0]);
+			mth::float2circle posRA = relativePos.getRA();
+			posRA.a -= turnAtOnce;
+			relativePos = mth::float2(posRA.getY(), posRA.getX());
+
+			distance -= legStretchHalf;
+			relativeHeaddingAbs -= fabsf(turnAtOnce);
 		}
 	}
 
@@ -511,9 +526,15 @@ namespace quadroped
 	{
 		if (!m_running)
 		{
-			AddPathElementMove(mth::float2(2.0f,1.0f), 0.0f);
-			AddPathElementMove(mth::float2(0.0f,-2.0f), 0.0f);
-			AddPathElementMove(mth::float2(-2.0f,1.0f), 0.0f);
+			//Triangle
+//			AddPathElementMove(mth::float2(2.0f,1.0f), 0.0f);
+//			AddPathElementMove(mth::float2(0.0f,-2.0f), 0.0f);
+//			AddPathElementMove(mth::float2(-2.0f,1.0f), 0.0f);
+
+			//Squer with turning
+			AddPathElementMove(mth::float2(3.0f, 0.0f), mth::pi * -0.75f);
+			AddPathElementMove(mth::float2(0.0f, 0.0f), mth::pi * 0.25f);
+
 			//todo there are previus solutions AddPathElementWalkStraight(2.0f);
 			//todo there are previus solutions AddPathElementTurn(-mth::pi*0.5f);
 
