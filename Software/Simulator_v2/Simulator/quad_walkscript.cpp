@@ -70,8 +70,8 @@ namespace quad
 		AddPathElementBodyMovement(mth::float2(0.0f, m_legStretchHalf*ratio), 0.0f);
 	}
 
-	void WalkScript::AddLegBodyElementsMove(float *distance, uint8_t *legCount,
-		float legStretchHalf, float turnAtOnce, mth::float2 motionDirection, quad::LegID *stepOrder, uint8_t motionFlag)
+	void WalkScript::AddLegBodyElementsMove(uint8_t *legCount,float legStretchHalf, float turnAtOnce, 
+		mth::float2 motionDirection, quad::LegID *stepOrder, uint8_t motionFlag)
 	{
 		float motionAngle = motionDirection.getRA().a;
 		mth::float2 point;
@@ -148,7 +148,6 @@ namespace quad
 
 			}
 		}
-		*distance -= legStretchHalf;
 		point = Section(stepOrder[*legCount]) * (m_legBasePos + m_legCenterPos.getXY()) + motionDirection * legStretchHalf;
 		point = RelativePointOnACircle(point, turnAtOnce);
 		AddPathElementLegMovement(stepOrder[*legCount], mth::float2(point.y,point.x));
@@ -465,13 +464,17 @@ namespace quad
 		//	O-TODO: Redesign turning command
 		//	x-TODO: Implement turning after move
 		//	x-TODO: Comment and uncomment all things for the other movement method
-		while (distance > m_EPS)
+		while (distance > m_EPS || relativeHeaddingAbs > m_EPS)
 		{
-			AddLegBodyElementsMove(&distance,&legCount, legStretchHalf, turnAtOnce, relativePos, &stepOrder[0], motionFlag);
+			AddLegBodyElementsMove(&legCount, legStretchHalf, turnAtOnce, relativePos, &stepOrder[0], motionFlag);
 			motionFlag = 0;
 			mth::float2circle posRA = relativePos.getRA();
 			posRA.a -= turnAtOnce;
 			relativePos = mth::float2(posRA.getY(), posRA.getX());
+
+
+			distance -= legStretchHalf;
+			relativeHeaddingAbs -= fabsf(turnAtOnce);
 		}
 		//TODO: Comment this out if tudn and move is together
 		/*while (relativeHeaddingAbs > 0.0f)
@@ -639,8 +642,8 @@ namespace quad
 			
 			//m_script.AddPathElementWalkStraight(2.0f);
 			//m_script.AddPathElementTurn(-mth::pi*0.5f);
-			m_script.AddPathElementMove(mth::float2(5.0f, 0.0f), mth::pi * -0.5f);
-			//m_script.AddPathElementMove(mth::float2(0.0f, 0.0f), mth::pi * 2.0f);
+			m_script.AddPathElementMove(mth::float2(3.0f, 0.0f), mth::pi * -0.5f);
+			m_script.AddPathElementMove(mth::float2(0.0f, 0.0f), mth::pi * 2.0f);
 			//m_script.AddPathElementMove(mth::float2(-2.0f, 1.0f), mth::pi * -0.5f);
 			
 
