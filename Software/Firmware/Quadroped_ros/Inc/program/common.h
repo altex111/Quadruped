@@ -116,7 +116,7 @@ typedef struct __attribute__((__packed__))ImuRequest{
 
 typedef struct __attribute__((__packed__))WalkCommand{
 	float x;
-	float z;
+	float y;
 	float phi;
 } WalkCommand;
 /* #### #### */
